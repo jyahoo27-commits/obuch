@@ -147,3 +147,49 @@ button:disabled {
 .bad {
   color: var(--danger);
 }
+
+.python-lab h3 {
+  margin-top: 0;
+}
+
+.py-select {
+  width: 100%;
+  margin: 8px 0 10px;
+  background: #0f192d;
+  color: var(--text);
+  border: 1px solid #304464;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.py-editor {
+  width: 100%;
+  min-height: 220px;
+  resize: vertical;
+  background: #07101d;
+  color: #dbeafe;
+  border: 1px solid #2a3f63;
+  border-radius: 10px;
+  padding: 10px;
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 13px;
+  line-height: 1.45;
+  margin: 8px 0 10px;
+}
+
+.py-output {
+  min-height: 90px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  background: #07101d;
+  color: #c7d2fe;
+  border: 1px solid #2a3f63;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px 0 8px;
+}
+
+.py-hint-wrap {
+  border-top: 1px solid #223554;
+  padding-top: 8px;
+}

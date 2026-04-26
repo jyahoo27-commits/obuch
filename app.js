@@ -7,6 +7,66 @@
   let currentLessonId = null;
   let currentQuizIndex = 0;
   let currentQuizCorrect = 0;
+  let pyodidePromise = null;
+  const pythonDrafts = {};
+
+  const PYTHON_LABS = {
+    m1l1: [
+      {
+        title: "Приветствие",
+        description: "Создай переменную name и выведи приветствие через f-строку.",
+        starter: 'name = "Дима"\nprint(f"Привет, {name}!")',
+        tests: 'assert "name" in globals()\nassert isinstance(name, str)',
+      },
+      {
+        title: "Возраст",
+        description: "Создай переменную age (число) и выведи возраст через 5 лет.",
+        starter: "age = 24\nprint(age + 5)",
+        tests: 'assert "age" in globals()\nassert isinstance(age, int)',
+      },
+    ],
+    m1l2: [
+      {
+        title: "Четное/нечетное",
+        description: "Напиши код, который задает number и печатает True, если число четное.",
+        starter: "number = 14\nprint(number % 2 == 0)",
+        tests: 'assert "number" in globals()\nassert number % 2 == 0 or number % 2 == 1',
+      },
+      {
+        title: "Функция суммы",
+        description: "Создай функцию add(a, b), которая возвращает сумму.",
+        starter: "def add(a, b):\n    return a + b\n\nprint(add(2, 3))",
+        tests: 'assert "add" in globals()\nassert add(10, 5) == 15',
+      },
+    ],
+    m1l3: [
+      {
+        title: "Очистка строк",
+        description: "Очисти список names: убрать пробелы и привести к Title Case.",
+        starter:
+          'names = ["  дима ", "КАТЯ", "вася  "]\nclean_names = [n.strip().title() for n in names]\nprint(clean_names)',
+        tests:
+          'assert "clean_names" in globals()\nassert clean_names == ["Дима", "Катя", "Вася"]',
+      },
+    ],
+    m1l4: [
+      {
+        title: "Безопасный ввод",
+        description: "Добавь try/except для защиты от нечислового ввода.",
+        starter:
+          'user_input = "abc"\ntry:\n    x = int(user_input)\n    print(x)\nexcept ValueError:\n    print("Это не число")',
+        tests: 'assert "try:" in """\n""" or True',
+      },
+    ],
+    m1l5: [
+      {
+        title: "Сумма от 1 до N",
+        description: "Вычисли сумму чисел от 1 до n.",
+        starter: "n = 10\ntotal = sum(range(1, n + 1))\nprint(total)",
+        tests: 'assert "total" in globals()\nassert total == 55',
+      },
+    ],
+  };
 
   try {
     await ensureContentLoaded();
@@ -77,6 +137,151 @@
   function updateHeader() {
     const levelInfo = getLevelInfo(state.totalXP || 0);
     levelBadge.textContent = `${levelInfo.currentLevel.icon} ${levelInfo.currentLevel.title} • XP: ${state.totalXP}`;
+  }
+
+  async function ensurePyRuntime() {
+    if (globalThis.pyodide) return globalThis.pyodide;
+    if (!pyodidePromise) {
+      pyodidePromise = new Promise((resolve, reject) => {
+        const script = document.createElement("script");
+        script.src = "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js";
+        script.onload = async () => {
+          try {
+            const py = await globalThis.loadPyodide({
+              stdout: () => {},
+              stderr: () => {},
+            });
+            resolve(py);
+          } catch (e) {
+            reject(e);
+          }
+        };
+        script.onerror = () => reject(new Error("Не удалось загрузить Python-движок (Pyodide)."));
+        document.head.appendChild(script);
+      });
+    }
+    return pyodidePromise;
+  }
+
+  async function runPythonCode(code) {
+    const py = await ensurePyRuntime();
+    const out = [];
+    const err = [];
+    py.setStdout({ batched: (msg) => out.push(msg) });
+    py.setStderr({ batched: (msg) => err.push(msg) });
+
+    try {
+      await py.runPythonAsync(code);
+      return { ok: true, output: out.join("\n").trim() };
+    } catch (e) {
+      return {
+        ok: false,
+        output: out.join("\n").trim(),
+        error: `${String(e)}${err.length ? `\n${err.join("\n")}` : ""}`.trim(),
+      };
+    }
+  }
+
+  function generatePythonHint(code, error, task) {
+    if (!error) {
+      return "Начни с маленького шага: сначала выведи промежуточный результат через print(), потом усложняй.";
+    }
+    if (/SyntaxError/i.test(error)) return "Синтаксическая ошибка: проверь двоеточия, скобки, кавычки и отступы.";
+    if (/IndentationError/i.test(error)) return "Проверь отступы в блоках if/for/while/def. В Python это критично.";
+    if (/NameError/i.test(error))
+      return "Используется переменная/функция, которая не объявлена. Проверь опечатки и порядок строк.";
+    if (/TypeError/i.test(error))
+      return "Скорее всего смешаны типы (строка и число). Используй int()/str() для преобразования.";
+    if (/ValueError/i.test(error))
+      return "Некорректное преобразование значения. Проверь, что в int()/float() передаётся правильный формат.";
+    if (/AssertionError/i.test(error))
+      return `Код запускается, но не проходит проверку задания "${task.title}". Сверь ожидаемое условие и имена переменных.`;
+    if (!code.includes("print(")) return "Добавь print(), чтобы увидеть промежуточные значения и быстрее понять, где ошибка.";
+    return "Разбей задачу на 2-3 шага: сначала переменные, затем логику, затем вывод.";
+  }
+
+  function renderPythonLab(lesson) {
+    const tasks = PYTHON_LABS[lesson.id];
+    if (!tasks?.length) return "";
+    return `
+      <section class="card python-lab" id="pythonLab">
+        <h3>Python-практика с помощником</h3>
+        <p class="muted">Пиши код, запускай прямо в приложении и получай подсказки по ошибкам.</p>
+        <label class="muted">Задание</label>
+        <select id="pyTaskSelect" class="py-select">
+          ${tasks.map((t, i) => `<option value="${i}">${i + 1}. ${t.title}</option>`).join("")}
+        </select>
+        <p id="pyTaskDesc" class="muted">${tasks[0].description}</p>
+        <textarea id="pyEditor" class="py-editor" spellcheck="false">${pythonDrafts[lesson.id] || tasks[0].starter}</textarea>
+        <div class="row">
+          <button id="pyRunBtn" type="button">▶ Запустить код</button>
+          <button id="pyCheckBtn" type="button" class="primary">Проверить задание</button>
+        </div>
+        <pre id="pyOutput" class="py-output">Готово к запуску.</pre>
+        <div class="py-hint-wrap">
+          <strong>AI-подсказка</strong>
+          <p id="pyHint" class="muted">После запуска здесь появится подсказка по твоему коду.</p>
+        </div>
+      </section>
+    `;
+  }
+
+  function bindPythonLab(lesson) {
+    const tasks = PYTHON_LABS[lesson.id];
+    if (!tasks?.length) return;
+    const taskSelect = document.getElementById("pyTaskSelect");
+    const taskDesc = document.getElementById("pyTaskDesc");
+    const editor = document.getElementById("pyEditor");
+    const output = document.getElementById("pyOutput");
+    const hint = document.getElementById("pyHint");
+    const runBtn = document.getElementById("pyRunBtn");
+    const checkBtn = document.getElementById("pyCheckBtn");
+
+    function getCurrentTask() {
+      return tasks[Number(taskSelect.value) || 0];
+    }
+
+    taskSelect.addEventListener("change", () => {
+      const task = getCurrentTask();
+      taskDesc.textContent = task.description;
+      if (!editor.value.trim()) editor.value = task.starter;
+      output.textContent = "Готово к запуску.";
+      hint.textContent = "После запуска здесь появится подсказка по твоему коду.";
+    });
+
+    editor.addEventListener("input", () => {
+      pythonDrafts[lesson.id] = editor.value;
+    });
+
+    runBtn.addEventListener("click", async () => {
+      runBtn.disabled = true;
+      output.textContent = "Запуск...";
+      const result = await runPythonCode(editor.value);
+      if (result.ok) {
+        output.textContent = result.output || "Код выполнился без вывода.";
+        hint.textContent = "Код запустился. Теперь проверь задание кнопкой 'Проверить задание'.";
+      } else {
+        output.textContent = `${result.output ? `${result.output}\n` : ""}${result.error}`;
+        hint.textContent = generatePythonHint(editor.value, result.error, getCurrentTask());
+      }
+      runBtn.disabled = false;
+    });
+
+    checkBtn.addEventListener("click", async () => {
+      checkBtn.disabled = true;
+      const task = getCurrentTask();
+      output.textContent = "Проверка задания...";
+      const combinedCode = `${editor.value}\n\n${task.tests}`;
+      const result = await runPythonCode(combinedCode);
+      if (result.ok) {
+        output.textContent = `Задание "${task.title}" пройдено.\n${result.output || ""}`.trim();
+        hint.textContent = "Отлично! Переходи к следующему заданию или усложни решение самостоятельно.";
+      } else {
+        output.textContent = `${result.output ? `${result.output}\n` : ""}${result.error}`;
+        hint.textContent = generatePythonHint(editor.value, result.error, task);
+      }
+      checkBtn.disabled = false;
+    });
   }
 
   async function completeLesson(lesson) {
@@ -186,6 +391,7 @@
         </div>
         <p class="muted">Лучший результат теста: ${bestQuiz}%</p>
       </section>
+      ${lesson.moduleId === "m1" ? renderPythonLab(lesson) : ""}
     `;
 
     document.getElementById("backToModules").addEventListener("click", renderModules);
@@ -199,6 +405,7 @@
       currentQuizCorrect = 0;
       renderQuiz(lesson);
     });
+    if (lesson.moduleId === "m1") bindPythonLab(lesson);
   }
 
   function renderQuiz(lesson) {
