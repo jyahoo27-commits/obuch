@@ -22,332 +22,221 @@ const DS_CONTENT = {
       lessons: [
         {
           id: 'm1l1',
-          title: 'Почему Python — язык №1 для DS?',
-          subtitle: 'Экосистема, синтаксис, первые шаги',
-          readTime: 12,
+          title: 'Python с нуля: установка и первый код',
+          subtitle: 'Для тех, кто вообще не писал код',
+          readTime: 14,
           xp: 60,
           content: `
 <div class="lesson-intro">
-  <p class="lead">Ты уже работаешь с данными в Сбере — это огромное преимущество. Python станет инструментом, который превратит твой опыт разметки в настоящий DS-скилл. Разберём почему именно Python.</p>
+  <p class="lead">Этот урок рассчитан на абсолютный ноль. Если ты никогда не писал код — это нормально. Здесь мы без сложных слов поймём, как запустить Python и написать первые рабочие строки.</p>
 </div>
 
-<h2>Почему Python, а не R, Julia или другие?</h2>
-<p>В российском DS-комьюнити, особенно в банках и финтехе, Python занимает доминирующее положение по нескольким причинам:</p>
+<h2>Что такое Python простыми словами</h2>
+<p>Python — это язык, на котором ты пишешь инструкции для компьютера. Как рецепт: шаг 1, шаг 2, шаг 3. Компьютер выполняет эти шаги в точном порядке.</p>
 
 <div class="key-point">
-  <span class="key-icon">📊</span>
-  <p><strong>По данным hh.ru (2025):</strong> 94% вакансий Data Scientist в России требуют Python. В Сбере Python — основной язык для всех ML-команд.</p>
+  <span class="key-icon">🧠</span>
+  <p><strong>Важно:</strong> тебе не нужно "быть технарём с детства". Код — это навык. Навык качается практикой, а не "талантом".</p>
 </div>
 
-<p>Конкретные причины выбора Python:</p>
+<h2>Где писать код новичку</h2>
+<p>Самый лёгкий старт — <strong>Google Colab</strong> (в браузере, без установки). Позже можно перейти в VS Code.</p>
 <ul class="lesson-list">
-  <li><strong>Читаемый синтаксис</strong> — код пишется почти как на русском. Меньше "шума", больше смысла</li>
-  <li><strong>Огромная экосистема библиотек</strong> — NumPy, Pandas, Scikit-learn, PyTorch — всё уже написано за тебя</li>
-  <li><strong>Активное комьюнити</strong> — любую ошибку можно найти на Stack Overflow или Habr</li>
-  <li><strong>Jupyter Notebook</strong> — интерактивная среда, где сразу видишь результат каждой строки кода</li>
-  <li><strong>Поддержка Яндекса, Сбера, VK</strong> — все крупные российские IT-компании используют Python</li>
+  <li>Открой <code>colab.research.google.com</code></li>
+  <li>Создай новый Notebook</li>
+  <li>Вставь код ниже и нажми кнопку запуска</li>
 </ul>
 
-<h2>Установка и среда разработки</h2>
-<p>Для DS-задач рекомендуется Anaconda — это Python + все нужные библиотеки в одном пакете:</p>
+<pre class="code-block"><code>print("Привет, Python!")
+print(2 + 3)
+print("Мне нравится учиться DS")</code></pre>
 
-<pre class="code-block"><code># 1. Скачай Anaconda с anaconda.com
-# 2. После установки открой терминал:
+<h2>Переменные: как хранить данные</h2>
+<p>Переменная — это "коробка" с именем, в которой лежит значение.</p>
 
-conda create -n dsenv python=3.11
-conda activate dsenv
-conda install jupyter pandas numpy matplotlib scikit-learn
+<pre class="code-block"><code>name = "Дима"      # текст (str)
+age = 20           # целое число (int)
+salary = 75000.0   # число с точкой (float)
+is_student = True  # логический тип (bool)
 
-# Запуск Jupyter Notebook:
-jupyter notebook</code></pre>
+print(name)
+print(age)
+print(type(name))
+print(type(age))</code></pre>
 
-<div class="tip">
-  <span class="tip-icon">💡</span>
-  <p><strong>Для начала</strong> можешь использовать Google Colab — бесплатная среда прямо в браузере, не нужно ничего устанавливать. Заходи на colab.research.google.com</p>
-</div>
+<h2>Ввод пользователя и простая арифметика</h2>
+<pre class="code-block"><code>user_name = input("Как тебя зовут? ")
+birth_year = int(input("В каком году ты родился? "))
+current_year = 2026
+age = current_year - birth_year
 
-<h2>Базовый синтаксис Python — то, что нужно знать DS</h2>
-
-<pre class="code-block"><code># Переменные — типы определяются автоматически
-age = 20
-name = "Дмитрий"
-salary = 75000.0
-is_employed = True
-
-# Списки — основа работы с данными
-scores = [85, 92, 78, 96, 88]
-print(f"Среднее: {sum(scores) / len(scores)}")  # f-строки
-
-# Словари — хранение структурированных данных
-employee = {
-    "name": "Дмитрий",
-    "role": "Разметка данных",
-    "company": "Сбер",
-    "experience_years": 5.5
-}
-print(employee["role"])  # Разметка данных
-
-# Циклы
-for score in scores:
-    if score >= 90:
-        print(f"Отлично: {score}")
-    else:
-        print(f"Хорошо: {score}")</code></pre>
-
-<h2>List Comprehensions — питонический стиль</h2>
-<p>List comprehensions — это мощный способ создавать списки. В DS-коде они встречаются постоянно:</p>
-
-<pre class="code-block"><code># Обычный способ
-high_scores = []
-for s in scores:
-    if s >= 90:
-        high_scores.append(s)
-
-# Питонический способ (list comprehension)
-high_scores = [s for s in scores if s >= 90]
-
-# Пример из DS — нормализация данных
-normalized = [x / max(scores) for x in scores]
-print(normalized)  # [0.885, 0.958, 0.812, 1.0, 0.916]</code></pre>
-
-<h2>Функции — строительные блоки DS-кода</h2>
-
-<pre class="code-block"><code>def calculate_accuracy(y_true, y_pred):
-    """
-    Вычисляет точность модели.
-    
-    Args:
-        y_true: список реальных меток
-        y_pred: список предсказанных меток
-    
-    Returns:
-        float: точность от 0 до 1
-    """
-    correct = sum(1 for t, p in zip(y_true, y_pred) if t == p)
-    return correct / len(y_true)
-
-# Использование
-real = [1, 0, 1, 1, 0, 1]
-pred = [1, 0, 0, 1, 0, 1]
-acc = calculate_accuracy(real, pred)
-print(f"Accuracy: {acc:.1%}")  # Accuracy: 83.3%</code></pre>
-
-<div class="key-point">
-  <span class="key-icon">🎯</span>
-  <p><strong>Твой опыт разметки данных поможет!</strong> Когда ты работал с разметкой качества нейросетей, ты уже интуитивно понимал концепции y_true (правильная разметка) и y_pred (разметка модели). Python просто даёт инструменты для автоматизации этих проверок.</p>
-</div>
-
-<h2>Работа с файлами и данными</h2>
-
-<pre class="code-block"><code>import json
-import csv
-
-# Чтение JSON (часто используется в DS)
-with open('data.json', 'r', encoding='utf-8') as f:
-    data = json.load(f)
-
-# Запись результатов
-results = {"accuracy": 0.95, "model": "random_forest"}
-with open('results.json', 'w', encoding='utf-8') as f:
-    json.dump(results, f, ensure_ascii=False, indent=2)
-
-# CSV файлы (таблицы)
-import csv
-with open('dataset.csv', 'r', encoding='utf-8') as f:
-    reader = csv.DictReader(f)
-    for row in reader:
-        print(row)  # каждая строка — словарь</code></pre>
+print(f"Привет, {user_name}!")
+print(f"Тебе примерно {age} лет")</code></pre>
 
 <div class="summary-block">
   <h3>📌 Итоги урока</h3>
   <ul>
-    <li>Python доминирует в DS из-за читаемости и огромной экосистемы</li>
-    <li>Для старта используй Google Colab или Anaconda</li>
-    <li>Освой: переменные, списки, словари, циклы, функции</li>
-    <li>List comprehensions делают код чище и быстрее</li>
-    <li>Твой опыт разметки = понимание y_true/y_pred на практике</li>
+    <li>Ты узнал, где запускать Python без сложной установки</li>
+    <li>Понял, что такое переменные и типы данных</li>
+    <li>Написал первый код с вводом и вычислениями</li>
+    <li>Сделал первый шаг к написанию своего кода с нуля</li>
   </ul>
 </div>`,
           quiz: [
-            { q: 'Что такое List Comprehension в Python?', opts: ['Тип данных для хранения списков', 'Краткий способ создать список с условием', 'Библиотека для работы с данными', 'Метод сортировки списка'], ans: 1, exp: 'List comprehension — питонический способ создать список: [x for x in data if условие]. Используется постоянно в DS-коде.' },
-            { q: 'Какую команду использовать для запуска Jupyter Notebook?', opts: ['python notebook.py', 'jupyter notebook', 'conda start jupyter', 'python -m jupyter'], ans: 1, exp: 'Команда "jupyter notebook" запускает локальный сервер и открывает браузер с интерфейсом.' },
-            { q: 'Что означает y_true в контексте ML?', opts: ['Предсказания модели', 'Точность модели', 'Реальные (правильные) метки', 'Обучающая выборка'], ans: 2, exp: 'y_true — это реальные значения (правильные метки), y_pred — предсказания модели. Ты уже работал с этой концепцией при контроле качества разметки!' },
-            { q: 'Что лучше использовать для DS-обучения без установки ПО?', opts: ['PyCharm Community', 'Google Colab', 'Visual Studio Code', 'Notepad++'], ans: 1, exp: 'Google Colab — бесплатная облачная среда с Python и всеми DS-библиотеками. Идеально для начала.' },
-            { q: 'Каков главный синтаксис f-строк в Python?', opts: ['${variable}', '#{variable}', 'f"{variable}"', '%(variable)s'], ans: 2, exp: 'f-строки: f"Привет, {name}!" — простой и современный способ вставлять переменные в строки (Python 3.6+).' }
+            { q: 'Что делает функция print()?', opts: ['Удаляет переменную', 'Выводит данные на экран', 'Сохраняет файл', 'Запускает цикл'], ans: 1, exp: 'print() используется для вывода текста, чисел и результатов вычислений.' },
+            { q: 'Какой тип данных у значения "Привет"?', opts: ['int', 'float', 'str', 'bool'], ans: 2, exp: 'Текст в кавычках — это строка (str).' },
+            { q: 'Зачем нужен input()?', opts: ['Для вывода на экран', 'Чтобы программа спросила данные у пользователя', 'Для создания списка', 'Для импорта библиотек'], ans: 1, exp: 'input() позволяет сделать программу интерактивной: пользователь вводит значение с клавиатуры.' },
+            { q: 'Что произойдет в коде age = 2026 - 2000?', opts: ['Ошибка', 'Получится строка', 'Получится число 26', 'Получится True'], ans: 2, exp: 'Это обычная арифметика, результатом будет целое число 26.' },
+            { q: 'Какой вариант f-строки правильный?', opts: ['f"Возраст: {age}"', '"Возраст: {age}"', 'f\'Возраст: age\'', '${age}'], ans: 0, exp: 'В f-строке переменная вставляется в фигурных скобках: f"... {age} ...".' }
           ]
         },
         {
           id: 'm1l2',
-          title: 'Структуры данных и ООП для DS',
-          subtitle: 'Словари, классы, lambda, map, filter',
-          readTime: 15,
-          xp: 70,
+          title: 'Условия, циклы и функции: база Python',
+          subtitle: 'Как писать свою логику, а не копировать код',
+          readTime: 18,
+          xp: 75,
           content: `
 <div class="lesson-intro">
-  <p class="lead">Data Scientist — это не просто человек, который знает алгоритмы. Это инженер, который пишет чистый и эффективный код. Разберём продвинутые структуры данных и ООП — без них не обойтись в реальных проектах Сбера.</p>
+  <p class="lead">Сейчас ты научишься главному: как программе "думать". Для этого нужны три вещи: условия, циклы и функции.</p>
 </div>
 
-<h2>Словари и Sets — структуры для работы с данными</h2>
+<h2>Условия if / elif / else</h2>
+<pre class="code-block"><code>score = int(input("Оценка от 0 до 100: "))
 
-<pre class="code-block"><code># Словари (dict) — ключ-значение, O(1) доступ
-client_data = {
-    "client_id": 123456,
-    "name": "Иван Петров",
-    "age": 35,
-    "balance": 450000,
-    "products": ["кредит", "дебетовая карта", "вклад"],
-    "risk_score": 0.15  # скоринг — вероятность дефолта
+if score >= 90:
+    print("Отлично")
+elif score >= 70:
+    print("Хорошо")
+else:
+    print("Нужно подтянуть")</code></pre>
+
+<h2>Цикл for: повторяем действия</h2>
+<pre class="code-block"><code>scores = [78, 91, 66, 85, 100]
+total = 0
+
+for s in scores:
+    total = total + s
+    print("Текущая оценка:", s)
+
+avg = total / len(scores)
+print("Средний балл:", avg)</code></pre>
+
+<h2>Цикл while: пока условие верно</h2>
+<pre class="code-block"><code>attempts = 3
+
+while attempts > 0:
+    password = input("Введи пароль: ")
+    if password == "python123":
+        print("Вход выполнен")
+        break
+    attempts = attempts - 1
+    print("Неверно. Осталось попыток:", attempts)</code></pre>
+
+<h2>Функции: переиспользуем код</h2>
+<pre class="code-block"><code>def greet(name):
+    print(f"Привет, {name}!")
+
+def add(a, b):
+    return a + b
+
+greet("Дима")
+result = add(10, 5)
+print("Сумма:", result)</code></pre>
+
+<h2>Списки и словари — главные структуры</h2>
+<pre class="code-block"><code># Список
+skills = ["Python", "SQL", "Pandas"]
+skills.append("Git")
+print(skills[0])   # Python
+print(skills[-1])  # Git
+
+# Словарь
+profile = {
+    "name": "Дима",
+    "role": "Data Annotation",
+    "company": "Сбер"
 }
+print(profile["role"])
+print(profile.get("city", "Не указано"))</code></pre>
 
-# Безопасное получение значения
-income = client_data.get("income", 0)  # 0 если нет ключа
-
-# Перебор словаря
-for key, value in client_data.items():
-    print(f"{key}: {value}")
-
-# Словарные comprehensions
-risk_flags = {
-    client_id: score > 0.3 
-    for client_id, score in risk_scores.items()
-}
-
-# Sets — уникальные значения, быстрый поиск
-unique_products = {"кредит", "вклад", "кредит", "ипотека"}
-print(unique_products)  # {'кредит', 'вклад', 'ипотека'} — дубли убраны</code></pre>
-
-<h2>Lambda, map, filter — функциональный стиль</h2>
-<p>В Pandas и других DS-библиотеках постоянно встречаются lambda-функции:</p>
-
-<pre class="code-block"><code># Lambda — анонимная функция
-square = lambda x: x ** 2
-print(square(5))  # 25
-
-# map — применяет функцию к каждому элементу
-scores = [0.1, 0.45, 0.72, 0.88, 0.33]
-risk_levels = list(map(lambda s: "высокий" if s > 0.5 else "низкий", scores))
-print(risk_levels)  # ['низкий', 'низкий', 'высокий', 'высокий', 'низкий']
-
-# filter — фильтрует по условию
-high_risk = list(filter(lambda s: s > 0.5, scores))
-print(high_risk)  # [0.72, 0.88]
-
-# sorted с key — очень частый паттерн
-clients = [("Иван", 0.8), ("Мария", 0.2), ("Алексей", 0.6)]
-sorted_by_risk = sorted(clients, key=lambda x: x[1], reverse=True)
-print(sorted_by_risk)  # [('Иван', 0.8), ('Алексей', 0.6), ('Мария', 0.2)]</code></pre>
-
-<h2>ООП (Объектно-ориентированное программирование)</h2>
-<p>В DS-проектах классы используются для создания моделей, пайплайнов и кастомных трансформеров данных. Scikit-learn целиком построен на ООП:</p>
-
-<pre class="code-block"><code">class DataPreprocessor:
-    """
-    Препроцессор данных для банковских скоринговых задач.
-    Пример класса в DS-стиле.
-    """
-    
-    def __init__(self, fillna_strategy='median'):
-        self.fillna_strategy = fillna_strategy
-        self.stats = {}  # сохраняем статистику при обучении
-        self.is_fitted = False
-    
-    def fit(self, data):
-        """Обучаемся на тренировочных данных"""
-        for col in data:
-            if self.fillna_strategy == 'median':
-                self.stats[col] = data[col].median()
-            else:
-                self.stats[col] = data[col].mean()
-        self.is_fitted = True
-        return self  # позволяет делать цепочки: .fit().transform()
-    
-    def transform(self, data):
-        """Применяем трансформацию"""
-        if not self.is_fitted:
-            raise ValueError("Сначала вызови fit()!")
-        result = data.copy()
-        for col, fill_value in self.stats.items():
-            if col in result.columns:
-                result[col] = result[col].fillna(fill_value)
-        return result
-    
-    def fit_transform(self, data):
-        """Удобный метод: fit + transform"""
-        return self.fit(data).transform(data)
-
-# Использование
-preprocessor = DataPreprocessor(fillna_strategy='median')
-clean_data = preprocessor.fit_transform(raw_data)</code></pre>
-
-<div class="key-point">
-  <span class="key-icon">🏦</span>
-  <p><strong>В Сбере</strong> DS-команды часто создают внутренние библиотеки с такими классами. Понимание ООП — обязательное требование для позиции Middle/Senior DS.</p>
+<div class="tip">
+  <span class="tip-icon">✅</span>
+  <p><strong>Мини-практика:</strong> напиши программу, которая спрашивает 3 оценки, считает среднее и выводит "зачёт", если среднее >= 70.</p>
 </div>
-
-<h2>Исключения и отладка</h2>
-
-<pre class="code-block"><code">def safe_divide(a, b):
-    """Пример обработки ошибок — важно в продакшн-коде"""
-    try:
-        result = a / b
-        return result
-    except ZeroDivisionError:
-        print("Ошибка: деление на ноль")
-        return None
-    except TypeError as e:
-        print(f"Неверный тип данных: {e}")
-        return None
-    finally:
-        print("Операция завершена")  # выполняется всегда
-
-# В DS это часто используется при загрузке данных:
-def load_model_safe(path):
-    try:
-        import pickle
-        with open(path, 'rb') as f:
-            model = pickle.load(f)
-        print(f"Модель загружена: {path}")
-        return model
-    except FileNotFoundError:
-        print(f"Файл не найден: {path}")
-        return None</code></pre>
-
-<h2>Генераторы — работа с большими данными</h2>
-<p>В Сбере данные могут быть огромными. Генераторы позволяют обрабатывать их без загрузки всего в RAM:</p>
-
-<pre class="code-block"><code># Обычный список загружает всё в память
-big_list = [x ** 2 for x in range(1_000_000)]  # ~8 MB
-
-# Генератор вычисляет значения по одному
-big_gen = (x ** 2 for x in range(1_000_000))  # ~100 bytes!
-
-# Функция-генератор — читает файл построчно
-def read_transactions(filepath):
-    """Читает транзакции по одной — экономия памяти"""
-    with open(filepath, 'r') as f:
-        for line in f:
-            yield json.loads(line)  # yield вместо return
-
-# Использование
-for transaction in read_transactions('transactions.jsonl'):
-    process(transaction)  # обрабатываем по одной</code></pre>
 
 <div class="summary-block">
   <h3>📌 Итоги урока</h3>
   <ul>
-    <li>Словари — основа хранения структурированных данных (клиенты, признаки)</li>
-    <li>lambda + map/filter — функциональный стиль, постоянно в Pandas</li>
-    <li>ООП: понимай паттерн fit/transform — он используется во всём Scikit-learn</li>
-    <li>Обрабатывай исключения — продакшн-код должен быть устойчивым</li>
-    <li>Генераторы — для работы с большими данными без нагрузки на RAM</li>
+    <li>Ты понял, как работают if/elif/else</li>
+    <li>Научился проходить по данным циклом for</li>
+    <li>Познакомился с while и break</li>
+    <li>Научился писать свои функции с return</li>
+    <li>Освоил базовые списки и словари</li>
   </ul>
 </div>`,
           quiz: [
-            { q: 'Что делает метод .get() у словаря?', opts: ['Возвращает все ключи', 'Возвращает значение, или default если ключ не найден', 'Удаляет элемент', 'Добавляет новый ключ'], ans: 1, exp: 'dict.get(key, default) безопасно получает значение. Если ключа нет — возвращает default вместо ошибки KeyError.' },
-            { q: 'В чём разница между list comprehension и генератором?', opts: ['Нет разницы', 'Генераторы быстрее для малых данных', 'Генераторы создают значения по одному, экономя память', 'List comprehensions поддерживают условия, генераторы — нет'], ans: 2, exp: 'Генератор (скобки вместо квадратных скобок) вычисляет значения по одному, что критично при работе с миллионами записей.' },
-            { q: 'Что делает ключевое слово yield в функции?', opts: ['Завершает функцию', 'Возвращает значение и приостанавливает функцию, создавая генератор', 'Выбрасывает исключение', 'Создаёт асинхронную функцию'], ans: 1, exp: 'yield превращает функцию в генератор. Каждый вызов next() выполняет код до следующего yield.' },
-            { q: 'Почему паттерн fit/transform важен для DS?', opts: ['Это стандарт Scikit-learn для всех трансформеров и моделей', 'Это единственный способ работать с Python', 'fit() сохраняет данные, transform() их удаляет', 'Это паттерн только для нейросетей'], ans: 0, exp: 'Весь Scikit-learn использует этот паттерн: fit() учится на тренировочных данных, transform() применяет к любым новым данным.' },
-            { q: 'Что вернёт sorted([("B",2),("A",1)], key=lambda x: x[1])?', opts: ['[("A",1), ("B",2)]', '[("B",2), ("A",1)]', '[("A",2), ("B",1)]', 'Ошибка'], ans: 0, exp: 'Сортировка по второму элементу (x[1]) — числу. 1 < 2, значит ("A",1) идёт первым.' }
+            { q: 'Когда срабатывает блок else?', opts: ['Всегда', 'Только если условие if/elif не выполнилось', 'Только в цикле', 'Только при ошибке'], ans: 1, exp: 'else выполняется, когда условия выше оказались ложными.' },
+            { q: 'Что делает return в функции?', opts: ['Печатает текст', 'Завершает программу', 'Возвращает результат из функции', 'Создаёт переменную'], ans: 2, exp: 'return передаёт значение наружу, чтобы его можно было использовать дальше.' },
+            { q: 'Как добавить элемент в список skills?', opts: ['skills.add("Git")', 'skills.append("Git")', 'skills.push("Git")', 'skills.insert() обязательно'], ans: 1, exp: 'Стандартный способ добавить в конец списка — append().' },
+            { q: 'Что вернёт profile.get("city", "Не указано"), если ключа city нет?', opts: ['Ошибка', 'None', '"Не указано"', 'Пустую строку'], ans: 2, exp: 'Метод get с default безопасно вернёт значение по умолчанию.' },
+            { q: 'Для чего нужен цикл for?', opts: ['Сравнивать строки', 'Повторять действия для каждого элемента', 'Создавать функции', 'Только для чисел'], ans: 1, exp: 'for перебирает элементы коллекции (списка, строки, range и т.д.).' }
+          ]
+        },
+        {
+          id: 'm1l3',
+          title: 'Практика новичка: 10 простых задач на Python',
+          subtitle: 'Закрепление без перегруза',
+          readTime: 16,
+          xp: 80,
+          content: `
+<div class="lesson-intro">
+  <p class="lead">Этот урок нужен, чтобы знания "прилипли". Суть: мало теории, больше коротких задач. Пиши руками, не копируй полностью.</p>
+</div>
+
+<h2>Задачи (делай по очереди)</h2>
+<ol class="lesson-list">
+  <li>Вывести своё имя и текущий год</li>
+  <li>Спросить у пользователя возраст и вывести, сколько будет через 5 лет</li>
+  <li>Посчитать среднее из трёх чисел</li>
+  <li>Проверить, чётное число или нет</li>
+  <li>Вывести числа от 1 до 10 циклом for</li>
+  <li>Посчитать сумму чисел от 1 до N</li>
+  <li>Найти максимальное число в списке</li>
+  <li>Создать словарь профиля и красиво его вывести</li>
+  <li>Написать функцию умножения двух чисел</li>
+  <li>Написать функцию, которая принимает список и возвращает среднее</li>
+</ol>
+
+<h2>Пример решения одной задачи</h2>
+<pre class="code-block"><code># Задача: сумма от 1 до N
+n = int(input("Введи N: "))
+total = 0
+
+for i in range(1, n + 1):
+    total += i
+
+print("Сумма:", total)</code></pre>
+
+<div class="tip">
+  <span class="tip-icon">🔥</span>
+  <p><strong>Режим тренировки:</strong> 30 минут в день: 20 минут код, 10 минут повторение ошибок. Это лучше 4 часов раз в неделю.</p>
+</div>
+
+<div class="summary-block">
+  <h3>📌 Итоги урока</h3>
+  <ul>
+    <li>Ты решаешь задачи руками, а не просто читаешь</li>
+    <li>Укрепляешь базу: ввод, условия, циклы, функции</li>
+    <li>Формируешь привычку ежедневной практики</li>
+  </ul>
+</div>`,
+          quiz: [
+            { q: 'Какой лучший режим обучения новичку?', opts: ['1 раз в месяц по 8 часов', 'Каждый день понемногу', 'Только читать статьи', 'Только смотреть видео'], ans: 1, exp: 'Регулярная короткая практика быстрее формирует навык кодинга.' },
+            { q: 'Что важнее для старта?', opts: ['Сразу писать сложные проекты', 'Закрепить базу на простых задачах', 'Учить только теорию', 'Сразу идти в нейросети'], ans: 1, exp: 'Без базы сложные темы будут непонятны и демотивируют.' },
+            { q: 'Почему нужно писать код руками?', opts: ['Так красивее', 'Мышечная память и понимание синтаксиса формируются только практикой', 'Иначе Python не запускается', 'Это нужно только для экзамена'], ans: 1, exp: 'Пассивное чтение не формирует навык. Навык появляется в момент написания и отладки.' },
+            { q: 'Если программа не работает, что делать сначала?', opts: ['Сразу удалять всё', 'Проверить ошибку и одну маленькую часть кода', 'Сменить язык', 'Закрыть ноутбук'], ans: 1, exp: 'Отладка по шагам — базовый навык программиста.' },
+            { q: 'Что поможет не бросить обучение?', opts: ['Только мотивация', 'Чёткий ежедневный минимальный план', 'Покупка дорогого курса', 'Сложные задачи с первого дня'], ans: 1, exp: 'Минимум на день (например 30 минут) делает обучение устойчивым.' }
           ]
         }
       ]
