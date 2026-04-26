@@ -2588,6 +2588,160 @@ print(sim_df.round(2))</code></pre>
           ]
         }
       ]
+    },
+
+    // ═══════════════════════════════════════════════
+    // MODULE 10 — Практика, кейсы и собеседования
+    // ═══════════════════════════════════════════════
+    {
+      id: 'm10',
+      title: 'Практика и симуляции DS',
+      subtitle: 'Больше реальных задач, меньше пассивного чтения',
+      icon: '🧪',
+      color: '#14b8a6',
+      estimatedDays: 7,
+      lessons: [
+        {
+          id: 'm10l1',
+          title: 'Мини-проект: скоринг от данных до API',
+          subtitle: 'Симуляция полного DS-цикла',
+          readTime: 16,
+          xp: 95,
+          content: `
+<div class="lesson-intro">
+  <p class="lead">Этот урок специально для практики. Здесь ты делаешь не "прочитал и забыл", а проходишь полный путь DS: данные → признаки → модель → API → мини-отчёт для бизнеса.</p>
+</div>
+
+<h2>Задача</h2>
+<p>Построй baseline-модель кредитного скоринга на открытых данных и упакуй её как API (FastAPI). Твоя цель — получить рабочий прототип, который можно показать на внутреннем интервью.</p>
+
+<h2>Этап 1: Данные и EDA</h2>
+<ul class="lesson-list">
+  <li>Загрузи датасет (например, Home Credit или German Credit)</li>
+  <li>Проверь пропуски, выбросы, дисбаланс классов</li>
+  <li>Сделай 3-5 графиков и короткие выводы по рисковым признакам</li>
+</ul>
+
+<h2>Этап 2: Baseline-модель</h2>
+<pre class="code-block"><code>from sklearn.model_selection import train_test_split
+from sklearn.pipeline import Pipeline
+from sklearn.compose import ColumnTransformer
+from sklearn.preprocessing import OneHotEncoder, StandardScaler
+from sklearn.impute import SimpleImputer
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import roc_auc_score
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42, stratify=y
+)
+
+numeric_pipe = Pipeline([
+    ("imputer", SimpleImputer(strategy="median")),
+    ("scaler", StandardScaler())
+])
+cat_pipe = Pipeline([
+    ("imputer", SimpleImputer(strategy="most_frequent")),
+    ("ohe", OneHotEncoder(handle_unknown="ignore"))
+])
+
+preprocess = ColumnTransformer([
+    ("num", numeric_pipe, num_cols),
+    ("cat", cat_pipe, cat_cols)
+])
+
+model = Pipeline([
+    ("prep", preprocess),
+    ("clf", LogisticRegression(max_iter=1000))
+])
+
+model.fit(X_train, y_train)
+proba = model.predict_proba(X_test)[:, 1]
+print("AUC:", roc_auc_score(y_test, proba))</code></pre>
+
+<h2>Этап 3: API и демо</h2>
+<ul class="lesson-list">
+  <li>Сохрани модель через joblib</li>
+  <li>Подними endpoint <code>/predict</code> на FastAPI</li>
+  <li>Проверь запросы через Postman или Swagger</li>
+  <li>Опиши бизнес-интерпретацию предсказаний (низкий/средний/высокий риск)</li>
+</ul>
+
+<h2>Критерии готовности</h2>
+<div class="summary-block">
+  <ul>
+    <li>Есть reproducible ноутбук с EDA и обучением</li>
+    <li>Есть AUC и короткая интерпретация метрик</li>
+    <li>Есть рабочий API с валидацией входных данных</li>
+    <li>Есть README с инструкцией запуска</li>
+  </ul>
+</div>`,
+          quiz: [
+            { q: 'Зачем в мини-проекте обязательно делать train/test split?', opts: ['Чтобы ускорить обучение', 'Чтобы честно оценить обобщающую способность модели', 'Потому что так требует sklearn', 'Чтобы уменьшить объем данных'], ans: 1, exp: 'Test-часть имитирует новые данные, которые модель не видела. Без этого метрика будет завышенной и невалидной.' },
+            { q: 'Почему baseline на Logistic Regression — хороший старт?', opts: ['Она всегда лучшая по AUC', 'Она даёт интерпретируемую отправную точку и быстрый прототип', 'Она не требует подготовки данных', 'Она заменяет все остальные модели'], ans: 1, exp: 'Baseline нужен как контрольная точка: быстро, понятно, интерпретируемо. Затем можно улучшать CatBoost/LightGBM.' },
+            { q: 'Что важнее добавить в README проекта для портфолио?', opts: ['Только скриншоты графиков', 'Пошаговый запуск, метрики и бизнес-смысл', 'Список библиотек без описания', 'Личный дневник обучения'], ans: 1, exp: 'Для интервью важно, чтобы проект можно было быстро запустить и понять, зачем он бизнесу.' },
+            { q: 'Какой минимальный endpoint нужен для демо ML API?', opts: ['/health и /predict', '/admin', '/metrics/raw', '/debug-only'], ans: 0, exp: 'Пара /health + /predict уже даёт полноценное демо готовности модели к прод-использованию.' },
+            { q: 'Если AUC на train 0.98, а на test 0.66 — что вероятнее всего?', opts: ['Идеальная модель', 'Переобучение', 'Плохой random_state', 'Ошибка в pandas'], ans: 1, exp: 'Большой разрыв между train и test типично указывает на overfitting.' }
+          ]
+        },
+        {
+          id: 'm10l2',
+          title: 'Челленджи и подготовка к DS-интервью',
+          subtitle: 'SQL + ML + продуктовые вопросы',
+          readTime: 14,
+          xp: 90,
+          content: `
+<div class="lesson-intro">
+  <p class="lead">Здесь ты тренируешь то, что реально спросят на внутреннем переходе: SQL, ML-мышление, продуктовые метрики и объяснение своих решений.</p>
+</div>
+
+<h2>Блок 1: SQL-челлендж (30 минут)</h2>
+<p>Напиши запросы для витрины антифрода:</p>
+<ul class="lesson-list">
+  <li>Количество транзакций клиента за последние 24 часа (velocity)</li>
+  <li>Средний чек за 30 дней и отклонение текущей суммы</li>
+  <li>Флаг "новое устройство" и "новый регион"</li>
+</ul>
+
+<h2>Блок 2: ML-кейс (45 минут)</h2>
+<p>Тебе дают таблицу с дисбалансом 1:200. Нужно предложить план:</p>
+<ul class="lesson-list">
+  <li>метрика (почему не accuracy)</li>
+  <li>валидация (stratified split / CV)</li>
+  <li>стратегия борьбы с дисбалансом (class_weight / sampling)</li>
+  <li>оценка риска утечки данных</li>
+</ul>
+
+<h2>Блок 3: Продуктовое мышление (20 минут)</h2>
+<p>Сформулируй для менеджера:</p>
+<ul class="lesson-list">
+  <li>какую бизнес-проблему решает модель</li>
+  <li>какой KPI должен улучшиться (например, fraud loss rate)</li>
+  <li>что будет условием успешного пилота через 1 месяц</li>
+</ul>
+
+<div class="tip">
+  <span class="tip-icon">🧭</span>
+  <p><strong>Шаблон ответа на интервью:</strong> Контекст → Гипотеза → Метрика → Эксперимент → Риски → Следующий шаг.</p>
+</div>
+
+<div class="summary-block">
+  <h3>📌 Итоги урока</h3>
+  <ul>
+    <li>Ты тренируешь не только код, но и объяснение решений</li>
+    <li>SQL, ML и продуктовый язык нужны одновременно</li>
+    <li>Сильный DS умеет говорить с бизнесом, не только с Python</li>
+    <li>Практика по таймеру поднимает шанс успешно пройти интервью</li>
+  </ul>
+</div>`,
+          quiz: [
+            { q: 'Почему accuracy плоха при дисбалансе 1:200?', opts: ['Её трудно считать', 'Модель может иметь высокий accuracy и не находить редкий класс', 'Accuracy работает только в регрессии', 'Её нельзя использовать в банках'], ans: 1, exp: 'При сильном дисбалансе модель может почти всегда угадывать мажоритарный класс и выглядеть "хорошо" по accuracy, но проваливаться по бизнес-целям.' },
+            { q: 'Какой набор метрик уместнее для антифрода?', opts: ['Accuracy + MAE', 'Recall, Precision, PR-AUC, cost-based метрика', 'Только R2', 'Только ROC-AUC без остального'], ans: 1, exp: 'Антифрод чувствителен к стоимости ошибок, поэтому нужны метрики, отражающие редкий класс и бизнес-цены FP/FN.' },
+            { q: 'Что должен содержать сильный ответ DS на кейс?', opts: ['Только выбор модели', 'Только SQL', 'Постановку задачи, метрики, эксперимент и риски', 'Список библиотек'], ans: 2, exp: 'На интервью оценивают мышление end-to-end, а не только один технический блок.' },
+            { q: 'Какой KPI ближе к бизнес-эффекту в антифроде?', opts: ['Количество строк в датасете', 'Fraud loss rate и доля предотвращённых потерь', 'Размер ноутбука', 'Средний p-value'], ans: 1, exp: 'Бизнесу важны деньги и риск, а не только абстрактные ML-метрики.' },
+            { q: 'Зачем тренироваться в формате "кейс за 60-90 минут"?', opts: ['Это модно', 'Так развивается скорость структурировать решение под реальные интервью', 'Чтобы писать больше кода', 'Чтобы не использовать SQL'], ans: 1, exp: 'Ограничение по времени приближает тебя к реальным условиям интервью и рабочих обсуждений.' }
+          ]
+        }
+      ]
     }
 
   ]
@@ -2641,5 +2795,5 @@ const ACHIEVEMENTS = [
   { id: 'all_ml', title: 'Машинист ML', desc: 'Завершить модуль ML', icon: '🤖', condition: (stats) => stats.completedModules.includes('m4') },
   { id: 'xp_500', title: 'Полпути пройдено', desc: 'Набрать 500 XP', icon: '⚡', condition: (stats) => stats.totalXP >= 500 },
   { id: 'xp_1000', title: 'Junior DS!', desc: 'Набрать 1000 XP', icon: '🏅', condition: (stats) => stats.totalXP >= 1000 },
-  { id: 'all_modules', title: 'Путь пройден!', desc: 'Завершить все модули', icon: '🌟', condition: (stats) => stats.completedLessons >= 20 },
+  { id: 'all_modules', title: 'Путь пройден!', desc: 'Завершить все модули', icon: '🌟', condition: (stats) => stats.completedLessons >= stats.lessonsTotal },
 ];
