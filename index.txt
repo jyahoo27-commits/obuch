@@ -1,0 +1,2645 @@
+// ======================================================
+// DS PATH — Educational Content
+// Полный курс: от разметки данных до Data Scientist
+// ======================================================
+
+const DS_CONTENT = {
+  version: '2.0.0',
+  totalXP: 0,
+
+  modules: [
+
+    // ═══════════════════════════════════════════════
+    // MODULE 1 — Python для Data Science
+    // ═══════════════════════════════════════════════
+    {
+      id: 'm1',
+      title: 'Python для Data Science',
+      subtitle: 'Фундамент — освой главный язык DS',
+      icon: '🐍',
+      color: '#3b82f6',
+      estimatedDays: 5,
+      lessons: [
+        {
+          id: 'm1l1',
+          title: 'Почему Python — язык №1 для DS?',
+          subtitle: 'Экосистема, синтаксис, первые шаги',
+          readTime: 12,
+          xp: 60,
+          content: `
+<div class="lesson-intro">
+  <p class="lead">Ты уже работаешь с данными в Сбере — это огромное преимущество. Python станет инструментом, который превратит твой опыт разметки в настоящий DS-скилл. Разберём почему именно Python.</p>
+</div>
+
+<h2>Почему Python, а не R, Julia или другие?</h2>
+<p>В российском DS-комьюнити, особенно в банках и финтехе, Python занимает доминирующее положение по нескольким причинам:</p>
+
+<div class="key-point">
+  <span class="key-icon">📊</span>
+  <p><strong>По данным hh.ru (2025):</strong> 94% вакансий Data Scientist в России требуют Python. В Сбере Python — основной язык для всех ML-команд.</p>
+</div>
+
+<p>Конкретные причины выбора Python:</p>
+<ul class="lesson-list">
+  <li><strong>Читаемый синтаксис</strong> — код пишется почти как на русском. Меньше "шума", больше смысла</li>
+  <li><strong>Огромная экосистема библиотек</strong> — NumPy, Pandas, Scikit-learn, PyTorch — всё уже написано за тебя</li>
+  <li><strong>Активное комьюнити</strong> — любую ошибку можно найти на Stack Overflow или Habr</li>
+  <li><strong>Jupyter Notebook</strong> — интерактивная среда, где сразу видишь результат каждой строки кода</li>
+  <li><strong>Поддержка Яндекса, Сбера, VK</strong> — все крупные российские IT-компании используют Python</li>
+</ul>
+
+<h2>Установка и среда разработки</h2>
+<p>Для DS-задач рекомендуется Anaconda — это Python + все нужные библиотеки в одном пакете:</p>
+
+<pre class="code-block"><code># 1. Скачай Anaconda с anaconda.com
+# 2. После установки открой терминал:
+
+conda create -n dsenv python=3.11
+conda activate dsenv
+conda install jupyter pandas numpy matplotlib scikit-learn
+
+# Запуск Jupyter Notebook:
+jupyter notebook</code></pre>
+
+<div class="tip">
+  <span class="tip-icon">💡</span>
+  <p><strong>Для начала</strong> можешь использовать Google Colab — бесплатная среда прямо в браузере, не нужно ничего устанавливать. Заходи на colab.research.google.com</p>
+</div>
+
+<h2>Базовый синтаксис Python — то, что нужно знать DS</h2>
+
+<pre class="code-block"><code># Переменные — типы определяются автоматически
+age = 20
+name = "Дмитрий"
+salary = 75000.0
+is_employed = True
+
+# Списки — основа работы с данными
+scores = [85, 92, 78, 96, 88]
+print(f"Среднее: {sum(scores) / len(scores)}")  # f-строки
+
+# Словари — хранение структурированных данных
+employee = {
+    "name": "Дмитрий",
+    "role": "Разметка данных",
+    "company": "Сбер",
+    "experience_years": 5.5
+}
+print(employee["role"])  # Разметка данных
+
+# Циклы
+for score in scores:
+    if score >= 90:
+        print(f"Отлично: {score}")
+    else:
+        print(f"Хорошо: {score}")</code></pre>
+
+<h2>List Comprehensions — питонический стиль</h2>
+<p>List comprehensions — это мощный способ создавать списки. В DS-коде они встречаются постоянно:</p>
+
+<pre class="code-block"><code># Обычный способ
+high_scores = []
+for s in scores:
+    if s >= 90:
+        high_scores.append(s)
+
+# Питонический способ (list comprehension)
+high_scores = [s for s in scores if s >= 90]
+
+# Пример из DS — нормализация данных
+normalized = [x / max(scores) for x in scores]
+print(normalized)  # [0.885, 0.958, 0.812, 1.0, 0.916]</code></pre>
+
+<h2>Функции — строительные блоки DS-кода</h2>
+
+<pre class="code-block"><code>def calculate_accuracy(y_true, y_pred):
+    """
+    Вычисляет точность модели.
+    
+    Args:
+        y_true: список реальных меток
+        y_pred: список предсказанных меток
+    
+    Returns:
+        float: точность от 0 до 1
+    """
+    correct = sum(1 for t, p in zip(y_true, y_pred) if t == p)
+    return correct / len(y_true)
+
+# Использование
+real = [1, 0, 1, 1, 0, 1]
+pred = [1, 0, 0, 1, 0, 1]
+acc = calculate_accuracy(real, pred)
+print(f"Accuracy: {acc:.1%}")  # Accuracy: 83.3%</code></pre>
+
+<div class="key-point">
+  <span class="key-icon">🎯</span>
+  <p><strong>Твой опыт разметки данных поможет!</strong> Когда ты работал с разметкой качества нейросетей, ты уже интуитивно понимал концепции y_true (правильная разметка) и y_pred (разметка модели). Python просто даёт инструменты для автоматизации этих проверок.</p>
+</div>
+
+<h2>Работа с файлами и данными</h2>
+
+<pre class="code-block"><code>import json
+import csv
+
+# Чтение JSON (часто используется в DS)
+with open('data.json', 'r', encoding='utf-8') as f:
+    data = json.load(f)
+
+# Запись результатов
+results = {"accuracy": 0.95, "model": "random_forest"}
+with open('results.json', 'w', encoding='utf-8') as f:
+    json.dump(results, f, ensure_ascii=False, indent=2)
+
+# CSV файлы (таблицы)
+import csv
+with open('dataset.csv', 'r', encoding='utf-8') as f:
+    reader = csv.DictReader(f)
+    for row in reader:
+        print(row)  # каждая строка — словарь</code></pre>
+
+<div class="summary-block">
+  <h3>📌 Итоги урока</h3>
+  <ul>
+    <li>Python доминирует в DS из-за читаемости и огромной экосистемы</li>
+    <li>Для старта используй Google Colab или Anaconda</li>
+    <li>Освой: переменные, списки, словари, циклы, функции</li>
+    <li>List comprehensions делают код чище и быстрее</li>
+    <li>Твой опыт разметки = понимание y_true/y_pred на практике</li>
+  </ul>
+</div>`,
+          quiz: [
+            { q: 'Что такое List Comprehension в Python?', opts: ['Тип данных для хранения списков', 'Краткий способ создать список с условием', 'Библиотека для работы с данными', 'Метод сортировки списка'], ans: 1, exp: 'List comprehension — питонический способ создать список: [x for x in data if условие]. Используется постоянно в DS-коде.' },
+            { q: 'Какую команду использовать для запуска Jupyter Notebook?', opts: ['python notebook.py', 'jupyter notebook', 'conda start jupyter', 'python -m jupyter'], ans: 1, exp: 'Команда "jupyter notebook" запускает локальный сервер и открывает браузер с интерфейсом.' },
+            { q: 'Что означает y_true в контексте ML?', opts: ['Предсказания модели', 'Точность модели', 'Реальные (правильные) метки', 'Обучающая выборка'], ans: 2, exp: 'y_true — это реальные значения (правильные метки), y_pred — предсказания модели. Ты уже работал с этой концепцией при контроле качества разметки!' },
+            { q: 'Что лучше использовать для DS-обучения без установки ПО?', opts: ['PyCharm Community', 'Google Colab', 'Visual Studio Code', 'Notepad++'], ans: 1, exp: 'Google Colab — бесплатная облачная среда с Python и всеми DS-библиотеками. Идеально для начала.' },
+            { q: 'Каков главный синтаксис f-строк в Python?', opts: ['${variable}', '#{variable}', 'f"{variable}"', '%(variable)s'], ans: 2, exp: 'f-строки: f"Привет, {name}!" — простой и современный способ вставлять переменные в строки (Python 3.6+).' }
+          ]
+        },
+        {
+          id: 'm1l2',
+          title: 'Структуры данных и ООП для DS',
+          subtitle: 'Словари, классы, lambda, map, filter',
+          readTime: 15,
+          xp: 70,
+          content: `
+<div class="lesson-intro">
+  <p class="lead">Data Scientist — это не просто человек, который знает алгоритмы. Это инженер, который пишет чистый и эффективный код. Разберём продвинутые структуры данных и ООП — без них не обойтись в реальных проектах Сбера.</p>
+</div>
+
+<h2>Словари и Sets — структуры для работы с данными</h2>
+
+<pre class="code-block"><code># Словари (dict) — ключ-значение, O(1) доступ
+client_data = {
+    "client_id": 123456,
+    "name": "Иван Петров",
+    "age": 35,
+    "balance": 450000,
+    "products": ["кредит", "дебетовая карта", "вклад"],
+    "risk_score": 0.15  # скоринг — вероятность дефолта
+}
+
+# Безопасное получение значения
+income = client_data.get("income", 0)  # 0 если нет ключа
+
+# Перебор словаря
+for key, value in client_data.items():
+    print(f"{key}: {value}")
+
+# Словарные comprehensions
+risk_flags = {
+    client_id: score > 0.3 
+    for client_id, score in risk_scores.items()
+}
+
+# Sets — уникальные значения, быстрый поиск
+unique_products = {"кредит", "вклад", "кредит", "ипотека"}
+print(unique_products)  # {'кредит', 'вклад', 'ипотека'} — дубли убраны</code></pre>
+
+<h2>Lambda, map, filter — функциональный стиль</h2>
+<p>В Pandas и других DS-библиотеках постоянно встречаются lambda-функции:</p>
+
+<pre class="code-block"><code># Lambda — анонимная функция
+square = lambda x: x ** 2
+print(square(5))  # 25
+
+# map — применяет функцию к каждому элементу
+scores = [0.1, 0.45, 0.72, 0.88, 0.33]
+risk_levels = list(map(lambda s: "высокий" if s > 0.5 else "низкий", scores))
+print(risk_levels)  # ['низкий', 'низкий', 'высокий', 'высокий', 'низкий']
+
+# filter — фильтрует по условию
+high_risk = list(filter(lambda s: s > 0.5, scores))
+print(high_risk)  # [0.72, 0.88]
+
+# sorted с key — очень частый паттерн
+clients = [("Иван", 0.8), ("Мария", 0.2), ("Алексей", 0.6)]
+sorted_by_risk = sorted(clients, key=lambda x: x[1], reverse=True)
+print(sorted_by_risk)  # [('Иван', 0.8), ('Алексей', 0.6), ('Мария', 0.2)]</code></pre>
+
+<h2>ООП (Объектно-ориентированное программирование)</h2>
+<p>В DS-проектах классы используются для создания моделей, пайплайнов и кастомных трансформеров данных. Scikit-learn целиком построен на ООП:</p>
+
+<pre class="code-block"><code">class DataPreprocessor:
+    """
+    Препроцессор данных для банковских скоринговых задач.
+    Пример класса в DS-стиле.
+    """
+    
+    def __init__(self, fillna_strategy='median'):
+        self.fillna_strategy = fillna_strategy
+        self.stats = {}  # сохраняем статистику при обучении
+        self.is_fitted = False
+    
+    def fit(self, data):
+        """Обучаемся на тренировочных данных"""
+        for col in data:
+            if self.fillna_strategy == 'median':
+                self.stats[col] = data[col].median()
+            else:
+                self.stats[col] = data[col].mean()
+        self.is_fitted = True
+        return self  # позволяет делать цепочки: .fit().transform()
+    
+    def transform(self, data):
+        """Применяем трансформацию"""
+        if not self.is_fitted:
+            raise ValueError("Сначала вызови fit()!")
+        result = data.copy()
+        for col, fill_value in self.stats.items():
+            if col in result.columns:
+                result[col] = result[col].fillna(fill_value)
+        return result
+    
+    def fit_transform(self, data):
+        """Удобный метод: fit + transform"""
+        return self.fit(data).transform(data)
+
+# Использование
+preprocessor = DataPreprocessor(fillna_strategy='median')
+clean_data = preprocessor.fit_transform(raw_data)</code></pre>
+
+<div class="key-point">
+  <span class="key-icon">🏦</span>
+  <p><strong>В Сбере</strong> DS-команды часто создают внутренние библиотеки с такими классами. Понимание ООП — обязательное требование для позиции Middle/Senior DS.</p>
+</div>
+
+<h2>Исключения и отладка</h2>
+
+<pre class="code-block"><code">def safe_divide(a, b):
+    """Пример обработки ошибок — важно в продакшн-коде"""
+    try:
+        result = a / b
+        return result
+    except ZeroDivisionError:
+        print("Ошибка: деление на ноль")
+        return None
+    except TypeError as e:
+        print(f"Неверный тип данных: {e}")
+        return None
+    finally:
+        print("Операция завершена")  # выполняется всегда
+
+# В DS это часто используется при загрузке данных:
+def load_model_safe(path):
+    try:
+        import pickle
+        with open(path, 'rb') as f:
+            model = pickle.load(f)
+        print(f"Модель загружена: {path}")
+        return model
+    except FileNotFoundError:
+        print(f"Файл не найден: {path}")
+        return None</code></pre>
+
+<h2>Генераторы — работа с большими данными</h2>
+<p>В Сбере данные могут быть огромными. Генераторы позволяют обрабатывать их без загрузки всего в RAM:</p>
+
+<pre class="code-block"><code># Обычный список загружает всё в память
+big_list = [x ** 2 for x in range(1_000_000)]  # ~8 MB
+
+# Генератор вычисляет значения по одному
+big_gen = (x ** 2 for x in range(1_000_000))  # ~100 bytes!
+
+# Функция-генератор — читает файл построчно
+def read_transactions(filepath):
+    """Читает транзакции по одной — экономия памяти"""
+    with open(filepath, 'r') as f:
+        for line in f:
+            yield json.loads(line)  # yield вместо return
+
+# Использование
+for transaction in read_transactions('transactions.jsonl'):
+    process(transaction)  # обрабатываем по одной</code></pre>
+
+<div class="summary-block">
+  <h3>📌 Итоги урока</h3>
+  <ul>
+    <li>Словари — основа хранения структурированных данных (клиенты, признаки)</li>
+    <li>lambda + map/filter — функциональный стиль, постоянно в Pandas</li>
+    <li>ООП: понимай паттерн fit/transform — он используется во всём Scikit-learn</li>
+    <li>Обрабатывай исключения — продакшн-код должен быть устойчивым</li>
+    <li>Генераторы — для работы с большими данными без нагрузки на RAM</li>
+  </ul>
+</div>`,
+          quiz: [
+            { q: 'Что делает метод .get() у словаря?', opts: ['Возвращает все ключи', 'Возвращает значение, или default если ключ не найден', 'Удаляет элемент', 'Добавляет новый ключ'], ans: 1, exp: 'dict.get(key, default) безопасно получает значение. Если ключа нет — возвращает default вместо ошибки KeyError.' },
+            { q: 'В чём разница между list comprehension и генератором?', opts: ['Нет разницы', 'Генераторы быстрее для малых данных', 'Генераторы создают значения по одному, экономя память', 'List comprehensions поддерживают условия, генераторы — нет'], ans: 2, exp: 'Генератор (скобки вместо квадратных скобок) вычисляет значения по одному, что критично при работе с миллионами записей.' },
+            { q: 'Что делает ключевое слово yield в функции?', opts: ['Завершает функцию', 'Возвращает значение и приостанавливает функцию, создавая генератор', 'Выбрасывает исключение', 'Создаёт асинхронную функцию'], ans: 1, exp: 'yield превращает функцию в генератор. Каждый вызов next() выполняет код до следующего yield.' },
+            { q: 'Почему паттерн fit/transform важен для DS?', opts: ['Это стандарт Scikit-learn для всех трансформеров и моделей', 'Это единственный способ работать с Python', 'fit() сохраняет данные, transform() их удаляет', 'Это паттерн только для нейросетей'], ans: 0, exp: 'Весь Scikit-learn использует этот паттерн: fit() учится на тренировочных данных, transform() применяет к любым новым данным.' },
+            { q: 'Что вернёт sorted([("B",2),("A",1)], key=lambda x: x[1])?', opts: ['[("A",1), ("B",2)]', '[("B",2), ("A",1)]', '[("A",2), ("B",1)]', 'Ошибка'], ans: 0, exp: 'Сортировка по второму элементу (x[1]) — числу. 1 < 2, значит ("A",1) идёт первым.' }
+          ]
+        }
+      ]
+    },
+
+    // ═══════════════════════════════════════════════
+    // MODULE 2 — NumPy и Pandas
+    // ═══════════════════════════════════════════════
+    {
+      id: 'm2',
+      title: 'NumPy и Pandas',
+      subtitle: 'Главные инструменты работы с данными',
+      icon: '🐼',
+      color: '#8b5cf6',
+      estimatedDays: 7,
+      lessons: [
+        {
+          id: 'm2l1',
+          title: 'NumPy — математика для DS',
+          subtitle: 'Массивы, операции, broadcasting',
+          readTime: 14,
+          xp: 65,
+          content: `
+<div class="lesson-intro">
+  <p class="lead">NumPy (Numerical Python) — основа всей экосистемы DS в Python. Pandas, Scikit-learn, PyTorch — все они используют NumPy под капотом. Понять NumPy = понять как данные хранятся в памяти компьютера.</p>
+</div>
+
+<h2>Почему NumPy, а не обычные списки Python?</h2>
+
+<pre class="code-block"><code">import numpy as np
+import time
+
+# Сравнение скорости: Python список vs NumPy
+size = 1_000_000
+python_list = list(range(size))
+numpy_array = np.arange(size)
+
+# Python список
+start = time.time()
+result = [x * 2 for x in python_list]
+print(f"Python: {time.time() - start:.3f} сек")  # ~0.15 сек
+
+# NumPy array
+start = time.time()
+result = numpy_array * 2
+print(f"NumPy: {time.time() - start:.3f} сек")   # ~0.002 сек
+
+# NumPy в 50-100 раз быстрее!
+# Причина: NumPy хранит данные непрерывно в памяти (C-style)
+# и использует векторизованные операции (SIMD инструкции CPU)</code></pre>
+
+<h2>Создание массивов — основные способы</h2>
+
+<pre class="code-block"><code">import numpy as np
+
+# Из списка
+a = np.array([1, 2, 3, 4, 5])
+print(a.dtype)   # int64
+print(a.shape)   # (5,) — одномерный, 5 элементов
+
+# Двумерный массив (матрица)
+matrix = np.array([
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9]
+])
+print(matrix.shape)  # (3, 3) — 3 строки, 3 столбца
+
+# Специальные массивы
+zeros = np.zeros((100, 10))     # 100x10 матрица из нулей
+ones = np.ones((5, 5))          # матрица из единиц
+random_data = np.random.rand(1000, 20)  # случайные данные [0,1)
+eye = np.eye(4)                 # единичная матрица 4x4
+
+# Диапазоны
+arr = np.arange(0, 10, 0.5)         # от 0 до 10 с шагом 0.5
+lin = np.linspace(0, 1, 100)    # 100 точек от 0 до 1
+
+# Типичный кейс в DS: создание фичей
+n_samples = 10000
+features = np.random.randn(n_samples, 15)  # 10000 объектов, 15 признаков
+labels = np.random.randint(0, 2, n_samples)  # бинарные метки</code></pre>
+
+<h2>Индексация и срезы</h2>
+
+<pre class="code-block"><code">data = np.array([10, 20, 30, 40, 50, 60, 70, 80, 90])
+
+# Базовая индексация
+print(data[0])    # 10 — первый элемент
+print(data[-1])   # 90 — последний
+
+# Срезы [start:end:step]
+print(data[2:6])      # [30, 40, 50, 60]
+print(data[::2])      # [10, 30, 50, 70, 90] — каждый второй
+print(data[::-1])     # [90, 80, 70, ...] — обратный порядок
+
+# Двумерные массивы
+matrix = np.random.rand(5, 4)  # 5 строк, 4 столбца
+print(matrix[0, :])    # первая строка
+print(matrix[:, 2])    # третий столбец
+print(matrix[1:3, 0:2])  # подматрица
+
+# Булевая индексация — ОЧЕНЬ важна в DS!
+scores = np.array([0.1, 0.7, 0.3, 0.9, 0.45, 0.85])
+high_risk = scores > 0.5        # [False, True, False, True, False, True]
+print(scores[high_risk])        # [0.7, 0.9, 0.85]
+print(scores[scores > 0.5])     # то же самое, короче
+
+# Выбор по нескольким условиям
+mask = (scores > 0.3) & (scores < 0.8)
+print(scores[mask])  # [0.7, 0.45]</code></pre>
+
+<h2>Broadcasting — магия NumPy</h2>
+<p>Broadcasting позволяет делать операции над массивами разных размеров. Это одна из самых мощных и непонятных поначалу концепций:</p>
+
+<pre class="code-block"><code"># Скаляр + массив
+a = np.array([1, 2, 3, 4])
+print(a * 10)  # [10, 20, 30, 40]
+
+# Строка + матрица (нормализация данных!)
+data = np.array([
+    [100, 0.5, 25],   # клиент 1: доход, скоринг, возраст
+    [50,  0.8, 40],   # клиент 2
+    [200, 0.2, 30],   # клиент 3
+])
+
+# Min-Max нормализация (часто используется перед ML)
+min_vals = data.min(axis=0)   # минимум по столбцам
+max_vals = data.max(axis=0)   # максимум по столбцам
+normalized = (data - min_vals) / (max_vals - min_vals)
+# Все значения теперь в диапазоне [0, 1]</code></pre>
+
+<h2>Основные математические операции</h2>
+
+<pre class="code-block"><code>data = np.random.randn(1000)  # 1000 случайных чисел
+
+# Статистика — ты будешь использовать это КАЖДЫЙ день
+print(f"Среднее:     {data.mean():.4f}")
+print(f"Медиана:     {np.median(data):.4f}")
+print(f"Std отклон:  {data.std():.4f}")
+print(f"Минимум:     {data.min():.4f}")
+print(f"Максимум:    {data.max():.4f}")
+print(f"Перцентили:  {np.percentile(data, [25, 50, 75])}")
+
+# Линейная алгебра
+A = np.array([[1, 2], [3, 4]])
+B = np.array([[5, 6], [7, 8]])
+
+# Матричное умножение — основа нейросетей!
+C = A @ B          # или np.dot(A, B)
+print(C)           # [[19, 22], [43, 50]]
+
+# Транспонирование
+print(A.T)         # [[1, 3], [2, 4]]
+
+# Определитель и обратная матрица
+print(np.linalg.det(A))      # -2.0
+print(np.linalg.inv(A))      # обратная матрица</code></pre>
+
+<div class="key-point">
+  <span class="key-icon">🏦</span>
+  <p><strong>Реальный кейс из Сбера:</strong> При разработке кредитного скоринга входные данные (доход, возраст, история платежей) нормализуются именно с помощью NumPy операций. Понимание broadcasting и векторных операций — обязательное требование.</p>
+</div>
+
+<div class="summary-block">
+  <h3>📌 Итоги урока</h3>
+  <ul>
+    <li>NumPy в 50-100 раз быстрее Python списков за счёт векторизации</li>
+    <li>ndarray — основная структура данных, имеет shape и dtype</li>
+    <li>Булевая индексация — мощный инструмент фильтрации данных</li>
+    <li>Broadcasting — позволяет работать с массивами разных размеров</li>
+    <li>Нормализация данных через NumPy — обязательный шаг перед ML</li>
+  </ul>
+</div>`,
+          quiz: [
+            { q: 'Почему NumPy быстрее обычных списков Python?', opts: ['NumPy написан на Rust', 'NumPy хранит данные непрерывно в памяти и использует векторизованные операции', 'NumPy использует многопоточность по умолчанию', 'NumPy работает на GPU'], ans: 1, exp: 'NumPy хранит данные в непрерывном блоке памяти (C-style) и использует SIMD инструкции процессора для векторных операций.' },
+            { q: 'Что вернёт np.array([1,2,3,4,5])[::2]?', opts: ['[1,2,3,4,5]', '[2,4]', '[1,3,5]', '[5,4,3,2,1]'], ans: 2, exp: 'Срез [::2] — каждый второй элемент, начиная с нулевого: [1,3,5].' },
+            { q: 'Как выбрать из массива scores все значения > 0.5?', opts: ['scores.filter(lambda x: x > 0.5)', 'scores[scores > 0.5]', 'np.where(scores, 0.5)', 'scores.select(">0.5")'], ans: 1, exp: 'Булевая индексация: scores > 0.5 создаёт булев массив, который используется как маска для фильтрации.' },
+            { q: 'Что делает axis=0 в операции data.min(axis=0)?', opts: ['Минимум всего массива', 'Минимум по столбцам', 'Минимум по строкам', 'Удаляет первую строку'], ans: 1, exp: 'axis=0 — операция вдоль строк (collapse rows), результат — значение для каждого столбца. axis=1 — операция вдоль столбцов.' },
+            { q: 'Какая операция выполняет матричное умножение в NumPy?', opts: ['A * B', 'A x B', 'A @ B', 'np.mul(A, B)'], ans: 2, exp: 'Оператор @ (Python 3.5+) или np.dot(A,B) — матричное умножение. A*B — поэлементное умножение!' }
+          ]
+        },
+        {
+          id: 'm2l2',
+          title: 'Pandas — сердце Data Science',
+          subtitle: 'DataFrame, очистка данных, группировка',
+          readTime: 18,
+          xp: 80,
+          content: `
+<div class="lesson-intro">
+  <p class="lead">Pandas — это Excel на стероидах. В реальных DS-проектах ты проводишь 60-70% времени за работой с данными именно в Pandas. Это не преувеличение — это проверенная практика.</p>
+</div>
+
+<h2>DataFrame и Series — основные структуры</h2>
+
+<pre class="code-block"><code">import pandas as pd
+import numpy as np
+
+# Series — одномерная структура с индексом
+scores = pd.Series(
+    [0.1, 0.7, 0.3, 0.9, 0.45],
+    index=['client_1', 'client_2', 'client_3', 'client_4', 'client_5'],
+    name='risk_score'
+)
+print(scores['client_2'])  # 0.7
+
+# DataFrame — таблица (основа всего!)
+df = pd.DataFrame({
+    'client_id': [101, 102, 103, 104, 105],
+    'age':       [25,  45,  32,  61,  38],
+    'income':    [50000, 120000, 75000, None, 90000],
+    'risk_score': [0.1, 0.7, 0.3, 0.9, 0.45],
+    'default':   [0, 1, 0, 1, 0],
+    'product':   ['карта', 'кредит', 'карта', 'ипотека', 'вклад']
+})
+
+print(df.shape)    # (5, 6) — 5 строк, 6 столбцов
+print(df.dtypes)   # типы данных каждого столбца
+print(df.info())   # общая информация + пропуски
+print(df.describe())  # статистика по числовым столбцам</code></pre>
+
+<h2>Загрузка реальных данных</h2>
+
+<pre class="code-block"><code"># CSV файлы (самый частый формат)
+df = pd.read_csv('clients.csv', encoding='utf-8')
+df = pd.read_csv('transactions.csv', 
+                  sep=';',           # разделитель
+                  decimal=',',       # десятичный разделитель
+                  parse_dates=['date'],  # конвертация дат
+                  nrows=10000)       # читать только первые 10k строк
+
+# Excel
+df = pd.read_excel('report.xlsx', sheet_name='Данные')
+
+# Из SQL (очень важно для работы в Сбере!)
+import sqlalchemy
+engine = sqlalchemy.create_engine('postgresql://user:pass@host/db')
+df = pd.read_sql("SELECT * FROM clients WHERE age > 25", engine)
+
+# Сохранение
+df.to_csv('result.csv', index=False, encoding='utf-8')
+df.to_excel('result.xlsx', index=False)</code></pre>
+
+<h2>Выборка и фильтрация данных</h2>
+
+<pre class="code-block"><code"># .loc — по метке (label-based)
+# .iloc — по позиции (integer-based)
+
+# Выбор столбцов
+ages = df['age']                    # Series
+subset = df[['age', 'income']]      # DataFrame
+
+# Фильтрация (как SQL WHERE)
+high_risk = df[df['risk_score'] > 0.5]
+young_clients = df[(df['age'] < 35) & (df['default'] == 0)]
+
+# Выбор строк по условию с .loc
+df.loc[df['product'] == 'кредит', 'income']
+
+# .query() — удобная альтернатива
+result = df.query("age > 30 and income > 60000")
+
+# Топ-N строк по значению
+top_risk = df.nlargest(10, 'risk_score')  # 10 самых рискованных</code></pre>
+
+<h2>Очистка данных — самая важная часть!</h2>
+
+<pre class="code-block"><code"># Анализ пропусков
+print(df.isnull().sum())          # количество NaN по столбцам
+print(df.isnull().mean() * 100)   # процент пропусков
+
+# Обработка пропусков
+df['income'].fillna(df['income'].median(), inplace=True)  # заполнить медианой
+df.dropna(subset=['client_id'], inplace=True)              # удалить строки без ID
+df['product'].fillna('неизвестно', inplace=True)           # текстовые пропуски
+
+# Дубликаты
+print(df.duplicated().sum())        # количество дублей
+df.drop_duplicates(inplace=True)    # удалить дубли
+df.drop_duplicates(subset=['client_id'], keep='last')  # по ключевому столбцу
+
+# Типы данных
+df['date'] = pd.to_datetime(df['date'])      # строка → дата
+df['income'] = pd.to_numeric(df['income'], errors='coerce')  # строка → число
+
+# Выбросы (outliers) — метод IQR
+Q1 = df['income'].quantile(0.25)
+Q3 = df['income'].quantile(0.75)
+IQR = Q3 - Q1
+lower = Q1 - 1.5 * IQR
+upper = Q3 + 1.5 * IQR
+df_clean = df[(df['income'] >= lower) & (df['income'] <= upper)]
+print(f"Удалено выбросов: {len(df) - len(df_clean)}")</code></pre>
+
+<div class="key-point">
+  <span class="key-icon">⚠️</span>
+  <p><strong>Золотое правило DS:</strong> Никогда не заполняй пропуски статистикой, вычисленной на тестовых данных! Считай медиану/среднее только на тренировочной выборке, потом применяй к тестовой. Иначе — утечка данных (data leakage).</p>
+</div>
+
+<h2>Группировка и агрегация (groupby)</h2>
+
+<pre class="code-block"><code"># groupby — аналог SQL GROUP BY
+# Средний скоринг по типу продукта
+product_stats = df.groupby('product')['risk_score'].agg([
+    'mean', 'median', 'std', 'count'
+]).round(3)
+print(product_stats)
+
+# Несколько столбцов агрегации
+summary = df.groupby('product').agg(
+    avg_age=('age', 'mean'),
+    avg_income=('income', 'median'),
+    default_rate=('default', 'mean'),
+    n_clients=('client_id', 'count')
+).reset_index()
+
+# pivot_table — сводная таблица
+pivot = df.pivot_table(
+    values='risk_score',
+    index='product',
+    columns='default',
+    aggfunc='mean'
+)</code></pre>
+
+<h2>Apply и функции преобразования</h2>
+
+<pre class="code-block"><code"># apply — применяет функцию к каждой строке или столбцу
+def risk_category(score):
+    if score < 0.3:
+        return 'низкий'
+    elif score < 0.6:
+        return 'средний'
+    else:
+        return 'высокий'
+
+df['risk_category'] = df['risk_score'].apply(risk_category)
+
+# Или через lambda
+df['income_group'] = df['income'].apply(
+    lambda x: 'высокий' if x > 100000 else 'низкий'
+)
+
+# map для замены значений
+df['default_label'] = df['default'].map({0: 'нет', 1: 'да'})
+
+# Векторизованные операции (быстрее apply!)
+df['income_normalized'] = (df['income'] - df['income'].min()) / \
+                           (df['income'].max() - df['income'].min())</code></pre>
+
+<h2>Merge и Join — объединение таблиц</h2>
+
+<pre class="code-block"><code"># Аналог SQL JOIN
+clients = pd.DataFrame({'id': [1,2,3], 'name': ['А','Б','В']})
+orders = pd.DataFrame({'client_id': [1,1,2,4], 'amount': [100,200,300,400]})
+
+# INNER JOIN
+result = pd.merge(clients, orders, left_on='id', right_on='client_id')
+
+# LEFT JOIN
+result = pd.merge(clients, orders, left_on='id', 
+                   right_on='client_id', how='left')
+
+# Вертикальное объединение (append)
+all_data = pd.concat([df_2023, df_2024], ignore_index=True)</code></pre>
+
+<div class="summary-block">
+  <h3>📌 Итоги урока</h3>
+  <ul>
+    <li>DataFrame = таблица с индексами. Series = один столбец</li>
+    <li>Читай данные: read_csv, read_excel, read_sql</li>
+    <li>Очистка данных: fillna, dropna, drop_duplicates, обработка выбросов</li>
+    <li>groupby + agg — мощный инструмент агрегации (аналог SQL GROUP BY)</li>
+    <li>merge — объединение таблиц (аналог SQL JOIN)</li>
+    <li>apply лучше циклов, но векторные операции ещё быстрее</li>
+  </ul>
+</div>`,
+          quiz: [
+            { q: 'В чём разница между .loc и .iloc?', opts: ['.loc — по имени столбца, .iloc — по числовому индексу строки/столбца', 'Нет разницы', '.loc быстрее', '.iloc работает только с числовыми данными'], ans: 0, exp: '.loc[строка, столбец] — по меткам (именам). .iloc[i, j] — по целочисленным позициям.' },
+            { q: 'Что такое data leakage при заполнении пропусков?', opts: ['Утечка данных из базы данных', 'Использование статистики тестовой выборки для заполнения пропусков в обучающей', 'Использование статистики обучающей выборки при обработке тестовой', 'Удаление строк с пропусками'], ans: 2, exp: 'Правильный ответ — третий: статистику (медиану/среднее) нужно считать ТОЛЬКО на train-данных, потом применять к test. Использование статистики test при обработке — это утечка данных.' },
+            { q: 'Как получить количество пропущенных значений по каждому столбцу?', opts: ['df.count()', 'df.isnull().sum()', 'df.na_count()', 'df.check_missing()'], ans: 1, exp: 'df.isnull() создаёт булев DataFrame, .sum() суммирует True (=1) по каждому столбцу.' },
+            { q: 'Что делает df.groupby("product")["risk"].mean()?', opts: ['Среднее risk для всего датафрейма', 'Среднее risk, сгруппированное по значениям product', 'Группирует строки по risk', 'Возвращает product для каждого значения risk'], ans: 1, exp: 'groupby + агрегация = SQL GROUP BY + функция. Для каждого уникального значения product вычисляется среднее risk.' },
+            { q: 'Какой тип join оставляет все строки из левой таблицы?', opts: ['INNER', 'RIGHT', 'LEFT', 'CROSS'], ans: 2, exp: 'LEFT JOIN (how="left") — все строки из левой таблицы сохраняются, для несовпадений из правой таблицы ставятся NaN.' }
+          ]
+        }
+      ]
+    },
+
+    // ═══════════════════════════════════════════════
+    // MODULE 3 — Статистика для DS
+    // ═══════════════════════════════════════════════
+    {
+      id: 'm3',
+      title: 'Статистика для DS',
+      subtitle: 'Математическая основа всех ML-алгоритмов',
+      icon: '📊',
+      color: '#10b981',
+      estimatedDays: 6,
+      lessons: [
+        {
+          id: 'm3l1',
+          title: 'Описательная статистика и распределения',
+          subtitle: 'Как понимать данные до построения модели',
+          readTime: 16,
+          xp: 70,
+          content: `
+<div class="lesson-intro">
+  <p class="lead">"Перед тем как строить модель — пойми данные." Это правило №1 каждого опытного DS. Статистика — это язык, на котором данные рассказывают свою историю. Научись её слушать.</p>
+</div>
+
+<h2>Меры центральной тенденции</h2>
+
+<pre class="code-block"><code>import numpy as np
+import pandas as pd
+from scipy import stats
+
+incomes = np.array([30000, 45000, 52000, 48000, 150000, 
+                    55000, 43000, 49000, 2000000, 51000])
+
+# Среднее — чувствительно к выбросам!
+mean = np.mean(incomes)
+print(f"Среднее: {mean:,.0f}")  # 308,300 — искажено миллионером!
+
+# Медиана — устойчива к выбросам
+median = np.median(incomes)
+print(f"Медиана: {median:,.0f}")  # 50,500 — реальная "середина"
+
+# Мода — самое частое значение
+mode_result = stats.mode(incomes)
+print(f"Мода: {mode_result.mode}")
+
+# В реальных задачах (кредитный скоринг)
+# используют медиану для заполнения пропусков дохода,
+# т.к. распределение дохода обычно имеет тяжёлый правый хвост</code></pre>
+
+<div class="key-point">
+  <span class="key-icon">💡</span>
+  <p><strong>Запомни навсегда:</strong> Среднее зарплаты Билла Гейтса и бездомного — около 40 миллиардов. Медиана = зарплата одного из них. В финансовых данных всегда смотри на медиану!</p>
+</div>
+
+<h2>Дисперсия и стандартное отклонение</h2>
+
+<pre class="code-block"><code>data = np.array([10, 12, 11, 13, 9, 10, 11, 12, 10, 11])
+
+# Дисперсия — средний квадрат отклонений от среднего
+variance = np.var(data)           # генеральная
+variance_sample = np.var(data, ddof=1)  # выборочная (делим на n-1)
+
+# Стандартное отклонение — корень из дисперсии, в тех же единицах
+std = np.std(data, ddof=1)
+print(f"Std: {std:.2f}")  # 1.05
+
+# Коэффициент вариации (CV) — относительный разброс
+cv = std / np.mean(data) * 100
+print(f"CV: {cv:.1f}%")  # 9.5% — малый разброс
+
+# Z-score — стандартизация (очень важна для ML!)
+z_scores = (data - np.mean(data)) / np.std(data, ddof=1)
+# Z-score показывает сколько std отклонений от среднего
+# |z| > 3 — обычно считается выбросом
+
+print("Выбросы (|z| > 2):", data[np.abs(z_scores) > 2])</code></pre>
+
+<h2>Квантили и перцентили</h2>
+
+<pre class="code-block"><code">incomes = pd.Series([...])  # данные о доходах
+
+# Перцентили
+p25 = np.percentile(incomes, 25)   # Q1 — нижний квартиль
+p50 = np.percentile(incomes, 50)   # Q2 — медиана
+p75 = np.percentile(incomes, 75)   # Q3 — верхний квартиль
+iqr = p75 - p25                    # межквартильный размах
+
+print(f"Q1={p25:,.0f}, Медиана={p50:,.0f}, Q3={p75:,.0f}")
+print(f"IQR={iqr:,.0f}")
+
+# Правило IQR для выбросов:
+# Выброс: x < Q1 - 1.5*IQR или x > Q3 + 1.5*IQR
+lower_fence = p25 - 1.5 * iqr
+upper_fence = p75 + 1.5 * iqr
+
+# Это то, что рисует "ящик с усами" (box plot)
+
+# describe() в Pandas даёт все эти числа сразу
+print(incomes.describe())</code></pre>
+
+<h2>Распределения — ключевые понятия</h2>
+
+<pre class="code-block"><code">from scipy import stats
+import matplotlib.pyplot as plt
+
+# Нормальное распределение — N(mu, sigma)
+# Правило 68-95-99.7:
+# 68% данных в [mu - sigma, mu + sigma]
+# 95% данных в [mu - 2*sigma, mu + 2*sigma]
+# 99.7% данных в [mu - 3*sigma, mu + 3*sigma]
+
+mu, sigma = 50000, 15000  # зарплата DS в тыс. руб
+normal_dist = stats.norm(mu, sigma)
+print(f"P(зарплата < 35000): {normal_dist.cdf(35000):.1%}")   # ~15.9%
+print(f"P(зарплата > 80000): {1 - normal_dist.cdf(80000):.1%}")  # ~2.3%
+
+# Бернулли и Биномиальное — для бинарных событий
+# Например: вероятность дефолта
+p_default = 0.05  # 5% вероятность дефолта
+n_clients = 1000
+
+# Ожидаемое число дефолтов
+expected = n_clients * p_default  # 50
+std_defaults = np.sqrt(n_clients * p_default * (1 - p_default))  # 6.9
+
+# Пуассоновское — количество событий за период
+# Например: количество мошеннических транзакций в час
+lambda_fraud = 3  # в среднем 3 мошеннические транзакции в час
+poisson = stats.poisson(lambda_fraud)
+print(f"P(0 мошенничеств): {poisson.pmf(0):.1%}")  # ~5%
+print(f"P(>5 мошенничеств): {1 - poisson.cdf(5):.1%}")  # ~8%</code></pre>
+
+<h2>Корреляция — связь между переменными</h2>
+
+<pre class="code-block"><code>import pandas as pd
+import numpy as np
+
+df = pd.read_csv('clients.csv')
+
+# Коэффициент Пирсона — линейная корреляция
+corr_matrix = df[['age', 'income', 'risk_score', 'default']].corr()
+print(corr_matrix)
+
+# Интерпретация:
+# |r| > 0.7 — сильная корреляция
+# 0.3 < |r| < 0.7 — умеренная
+# |r| < 0.3 — слабая
+
+# Корреляция != Причинность!
+# Пример: число утопленников коррелирует с продажами мороженого
+# Причина: оба зависят от жаркой погоды
+
+# Коэффициент Спирмена — для нелинейных связей и рангов
+corr_spearman, p_value = stats.spearmanr(df['age'], df['risk_score'])
+print(f"Спирмен: {corr_spearman:.3f}, p-value: {p_value:.4f}")
+
+# Тепловая карта корреляции — стандартный инструмент EDA
+import seaborn as sns
+import matplotlib.pyplot as plt
+plt.figure(figsize=(8, 6))
+sns.heatmap(corr_matrix, annot=True, cmap='coolwarm', center=0)
+plt.title('Матрица корреляций')
+plt.show()</code></pre>
+
+<div class="key-point">
+  <span class="key-icon">🎯</span>
+  <p><strong>В DS-интервью часто спрашивают:</strong> "Что делать с сильно скоррелированными признаками?" Ответ: мультиколлинеарность мешает линейным моделям — нужно удалить один из признаков или применить PCA.</p>
+</div>
+
+<div class="summary-block">
+  <h3>📌 Итоги урока</h3>
+  <ul>
+    <li>Среднее vs Медиана: при выбросах используй медиану (финансовые данные!)</li>
+    <li>Std и IQR — меры разброса, IQR устойчив к выбросам</li>
+    <li>Z-score — стандартизация, |z|>3 сигнализирует о выбросе</li>
+    <li>Нормальное распределение: правило 68-95-99.7</li>
+    <li>Корреляция: Пирсон для линейных связей, Спирмен для ранговых</li>
+    <li>Корреляция ≠ Причинность!</li>
+  </ul>
+</div>`,
+          quiz: [
+            { q: 'Почему медиана лучше среднего для зарплатных данных?', opts: ['Медиана быстрее вычисляется', 'Медиана устойчива к выбросам (очень богатым/бедным)', 'Среднее работает только для целых чисел', 'Медиана точнее среднего'], ans: 1, exp: 'Распределение зарплат имеет тяжёлый правый хвост (несколько очень богатых людей). Медиана игнорирует эти выбросы и показывает реальную "середину".' },
+            { q: 'Что означает Z-score = 2.5 для какого-то значения?', opts: ['Значение равно 2.5', 'Значение на 2.5 std выше среднего', 'Значение в топ-2.5%', 'Значение является выбросом'], ans: 1, exp: 'Z-score = (x - mean) / std. Z=2.5 означает что x на 2.5 стандартных отклонения выше среднего. По правилу |z|>2-3 считается потенциальным выбросом.' },
+            { q: 'Правило 68-95-99.7 относится к какому распределению?', opts: ['Равномерному', 'Биномиальному', 'Пуассоновскому', 'Нормальному'], ans: 3, exp: 'Для нормального распределения: 68% данных в ±1σ, 95% в ±2σ, 99.7% в ±3σ от среднего.' },
+            { q: 'Что такое IQR?', opts: ['Среднее значение в выборке', 'Q3 минус Q1 (межквартильный размах)', 'Стандартное отклонение', 'Максимум минус минимум'], ans: 1, exp: 'IQR = Q3 - Q1 — разница между 75-м и 25-м перцентилями. Используется для определения выбросов: выброс < Q1-1.5*IQR или > Q3+1.5*IQR.' },
+            { q: 'Корреляция Пирсона r = -0.85 означает:', opts: ['Сильная положительная линейная связь', 'Слабая отрицательная связь', 'Сильная отрицательная линейная связь', 'Причинно-следственная связь'], ans: 2, exp: '|r| = 0.85 — сильная корреляция (>0.7). Знак минус — при росте X, Y убывает. Помни: корреляция ≠ причинность!' }
+          ]
+        },
+        {
+          id: 'm3l2',
+          title: 'A/B тесты и проверка гипотез',
+          subtitle: 'Статистические тесты для бизнес-решений',
+          readTime: 14,
+          xp: 75,
+          content: `
+<div class="lesson-intro">
+  <p class="lead">В Сбере каждое изменение в мобильном приложении, каждая новая скоринговая модель, каждый новый алгоритм проходит A/B тестирование. Умение правильно проводить и интерпретировать тесты — ключевой навык DS в банке.</p>
+</div>
+
+<h2>Что такое гипотеза в статистике?</h2>
+
+<pre class="code-block"><code># H0 (нулевая гипотеза) — "ничего не изменилось"
+# H1 (альтернативная) — "что-то изменилось"
+
+# Пример из Сбера:
+# H0: Новый алгоритм рекомендаций НЕ увеличивает конверсию
+# H1: Новый алгоритм рекомендаций увеличивает конверсию
+
+# p-value: вероятность получить такой результат, если H0 верна
+# Если p-value < 0.05 (или 0.01) — отвергаем H0
+
+# ВАЖНО: p < 0.05 не означает, что H1 верна с 95% вероятностью!
+# Это значит: если H0 верна, вероятность случайно получить 
+# такой результат менее 5%.</code></pre>
+
+<h2>T-тест — сравнение средних</h2>
+
+<pre class="code-block"><code>from scipy import stats
+import numpy as np
+
+# Сценарий: сравниваем средние чеки двух групп клиентов
+# Группа A: старый интерфейс приложения
+# Группа B: новый интерфейс с AI-рекомендациями
+
+np.random.seed(42)
+group_a = np.random.normal(5000, 1500, 500)   # 500 клиентов
+group_b = np.random.normal(5300, 1600, 500)   # 500 клиентов
+
+print(f"Группа A: среднее = {group_a.mean():.0f}, std = {group_a.std():.0f}")
+print(f"Группа B: среднее = {group_b.mean():.0f}, std = {group_b.std():.0f}")
+
+# Независимый t-тест (two-sample t-test)
+t_stat, p_value = stats.ttest_ind(group_a, group_b)
+print(f"\nt-статистика: {t_stat:.4f}")
+print(f"p-value: {p_value:.4f}")
+
+alpha = 0.05
+if p_value < alpha:
+    print(f"✅ Отвергаем H0: разница статистически значима (p={p_value:.4f} < {alpha})")
+    print("Новый интерфейс лучше!")
+else:
+    print(f"❌ Нет основания отвергать H0 (p={p_value:.4f} >= {alpha})")
+    print("Разница может быть случайной")</code></pre>
+
+<h2>Практический размер эффекта (Cohen's d)</h2>
+
+<pre class="code-block"><code># Статистическая значимость ≠ практическая значимость!
+# Пример: при 1 миллионе клиентов любая крошечная разница 
+# будет "статистически значимой"
+
+def cohens_d(group1, group2):
+    """
+    Размер эффекта по Коэну:
+    d < 0.2 — очень малый эффект
+    0.2-0.5 — малый эффект  
+    0.5-0.8 — средний эффект
+    d > 0.8 — большой эффект
+    """
+    n1, n2 = len(group1), len(group2)
+    pooled_std = np.sqrt(((n1-1)*np.var(group1,ddof=1) + 
+                          (n2-1)*np.var(group2,ddof=1)) / (n1+n2-2))
+    return (np.mean(group1) - np.mean(group2)) / pooled_std
+
+d = cohens_d(group_b, group_a)
+print(f"Cohen's d = {d:.3f}")
+# Интерпретация: малый (~0.2), средний (~0.5), большой (>0.8) эффект</code></pre>
+
+<h2>Расчёт необходимого размера выборки</h2>
+
+<pre class="code-block"><code>from statsmodels.stats.power import TTestIndPower
+
+# Перед A/B тестом нужно рассчитать: сколько клиентов нам нужно?
+analysis = TTestIndPower()
+
+sample_size = analysis.solve_power(
+    effect_size=0.2,   # минимальный эффект, который хотим обнаружить
+    power=0.8,         # мощность теста (80% — стандарт)
+    alpha=0.05,        # уровень значимости
+    ratio=1.0,         # соотношение групп A/B
+    alternative='two-sided'
+)
+print(f"Необходимо клиентов в каждой группе: {int(np.ceil(sample_size))}")
+# ~394 клиента в каждой группе
+
+# В реальности в Сбере тесты идут неделями из-за:
+# - Сезонности (день недели, время месяца)
+# - Новизны (novelty effect) — люди реагируют на всё новое
+# - Сегментации пользователей</code></pre>
+
+<h2>Хи-квадрат тест — для категориальных данных</h2>
+
+<pre class="code-block"><code"># Часто нужен для проверки связи между категориальными переменными
+# Пример: зависит ли дефолт от региона?
+
+from scipy.stats import chi2_contingency
+
+# Контингентная таблица: строки — регионы, столбцы — дефолт/не дефолт
+observed = np.array([
+    [120, 30],   # Москва: 120 без дефолта, 30 с дефолтом
+    [85, 25],    # Питер
+    [200, 80],   # Другие регионы
+])
+
+chi2, p_value, dof, expected = chi2_contingency(observed)
+print(f"Chi2 = {chi2:.4f}")
+print(f"p-value = {p_value:.4f}")
+print(f"Степени свободы = {dof}")
+
+if p_value < 0.05:
+    print("Связь между регионом и дефолтом статистически значима")
+else:
+    print("Связи между регионом и дефолтом не выявлено")</code></pre>
+
+<div class="key-point">
+  <span class="key-icon">⚠️</span>
+  <p><strong>Частые ошибки A/B тестирования в банках:</strong><br>
+  1. Peek problem — останавливать тест как только p < 0.05<br>
+  2. Multiple testing — тестировать 10 метрик и выбирать нужную<br>
+  3. Неправильная рандомизация — клиент видит разные версии<br>
+  4. Игнорирование мощности теста — слишком маленькая выборка</p>
+</div>
+
+<div class="summary-block">
+  <h3>📌 Итоги урока</h3>
+  <ul>
+    <li>H0 (нулевая) vs H1 (альтернативная) гипотеза</li>
+    <li>p-value < 0.05 → отвергаем H0 (стандартный порог)</li>
+    <li>T-тест — сравнение средних двух независимых групп</li>
+    <li>Cohen's d — практический размер эффекта (p-value мало!)</li>
+    <li>Рассчитывай размер выборки ДО начала теста</li>
+    <li>Хи-квадрат — для категориальных переменных</li>
+  </ul>
+</div>`,
+          quiz: [
+            { q: 'p-value = 0.03 при alpha = 0.05. Ваш вывод?', opts: ['Принимаем H0', 'Отвергаем H0 — результат статистически значим', 'Нужно больше данных', 'H1 верна с 97% вероятностью'], ans: 1, exp: 'p-value < alpha (0.03 < 0.05) → отвергаем нулевую гипотезу. НО: это не означает, что H1 верна с 97% вероятностью — p-value это не "вероятность что H1 верна".' },
+            { q: 'Что такое "Peek problem" в A/B тестах?', opts: ['Проблема разделения аудитории', 'Остановка теста как только p < 0.05 без соблюдения заранее определённого размера выборки', 'Слишком большая выборка', 'Тестирование только одной метрики'], ans: 1, exp: 'Если смотреть на результаты непрерывно и останавливать тест при достижении p < 0.05, мы резко увеличиваем вероятность ложноположительного результата.' },
+            { q: 'Какой тест использовать для сравнения средних чеков между группой A и B?', opts: ['Хи-квадрат тест', 'T-тест (независимый)', 'Z-тест для пропорций', 'ANOVA'], ans: 1, exp: 'Независимый t-тест сравнивает средние двух независимых выборок. Для >2 групп использовать ANOVA.' },
+            { q: 'Cohen\'s d = 0.15. Как это интерпретировать?', opts: ['Очень большой эффект', 'Большой эффект (>0.8)', 'Очень малый эффект', 'Средний эффект (0.5-0.8)'], ans: 2, exp: 'По Коэну: d < 0.2 — очень малый эффект. Даже если p < 0.05, практическая значимость крайне мала.' },
+            { q: 'Когда использовать хи-квадрат тест?', opts: ['Сравнение средних двух групп', 'Проверка нормальности данных', 'Проверка связи между категориальными переменными', 'Сравнение дисперсий'], ans: 2, exp: 'Хи-квадрат (χ²) — для категориальных данных (да/нет, регион, продукт). Например: связан ли дефолт с регионом?' }
+          ]
+        }
+      ]
+    },
+
+    // ═══════════════════════════════════════════════
+    // MODULE 4 — Машинное обучение
+    // ═══════════════════════════════════════════════
+    {
+      id: 'm4',
+      title: 'Машинное обучение — Основы',
+      subtitle: 'Теория и практика ML с нуля',
+      icon: '🤖',
+      color: '#f59e0b',
+      estimatedDays: 8,
+      lessons: [
+        {
+          id: 'm4l1',
+          title: 'Введение в ML: типы задач и алгоритмы',
+          subtitle: 'Классификация, регрессия, кластеризация',
+          readTime: 15,
+          xp: 75,
+          content: `
+<div class="lesson-intro">
+  <p class="lead">Ты уже работал с результатами ML — проверял качество разметки для обучения нейросетей. Теперь ты узнаешь как эти нейросети обучаются изнутри. Это кардинально меняет восприятие своей работы.</p>
+</div>
+
+<h2>Что такое машинное обучение?</h2>
+<p>Традиционное программирование: Данные + Правила → Ответы<br>
+Машинное обучение: Данные + Ответы → Правила (модель)</p>
+
+<pre class="code-block"><code># Традиционное программирование (if-else)
+def assess_credit_risk_old(income, age, history):
+    if income < 30000:
+        return "высокий риск"
+    elif age < 25 and history < 2:
+        return "высокий риск"
+    else:
+        return "низкий риск"
+
+# Машинное обучение: модель сама находит правила!
+from sklearn.ensemble import RandomForestClassifier
+
+# Обучаем модель на исторических данных
+model = RandomForestClassifier(n_estimators=100)
+model.fit(X_train, y_train)  # X — признаки, y — дефолт: 0/1
+
+# Модель сама выявила сотни сложных закономерностей
+# которые невозможно записать вручную</code></pre>
+
+<h2>Три главных типа задач ML</h2>
+
+<pre class="code-block"><code"># 1. КЛАССИФИКАЦИЯ — предсказать категорию
+# Вопрос: "Будет ли дефолт?" → 0 или 1
+# Примеры в Сбере:
+# - Одобрить/отклонить заявку на кредит
+# - Мошенничество или нет?
+# - Оттек клиента: уйдёт/останется
+
+# 2. РЕГРЕССИЯ — предсказать число
+# Вопрос: "Какой будет доход?" → 75432.5
+# Примеры в Сбере:
+# - Прогноз суммы кредита
+# - Оценка стоимости недвижимости
+# - Прогноз трат клиента в следующем месяце
+
+# 3. КЛАСТЕРИЗАЦИЯ — найти группы (без меток)
+# Вопрос: "На какие сегменты разделить клиентов?"
+# Примеры в Сбере:
+# - Сегментация клиентов для таргетинга
+# - Выявление аномалий в транзакциях
+# - Создание клиентских профилей
+
+# Дополнительно:
+# - Ранжирование (recommender systems)
+# - Генерация (GPT, DALL-E)
+# - Обнаружение аномалий (anomaly detection)</code></pre>
+
+<h2>Ключевые понятия ML</h2>
+
+<pre class="code-block"><code">import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+
+# Датасет: банковские клиенты
+df = pd.read_csv('bank_clients.csv')
+
+# ПРИЗНАКИ (features, X) — то чем описываем объект
+feature_columns = ['age', 'income', 'credit_score', 
+                   'num_products', 'account_age_months']
+X = df[feature_columns]
+
+# ЦЕЛЕВАЯ ПЕРЕМЕННАЯ (target, y) — что предсказываем
+y = df['will_churn']  # 0 = останется, 1 = уйдёт
+
+# РАЗБИВКА НА TRAIN/TEST — ОБЯЗАТЕЛЬНО!
+# Обучаем на train, оцениваем на test (то что модель не видела)
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, 
+    test_size=0.2,      # 20% на тест
+    random_state=42,    # воспроизводимость
+    stratify=y          # сохранить пропорцию классов
+)
+
+print(f"Обучающая выборка: {X_train.shape}")  # (8000, 5)
+print(f"Тестовая выборка:  {X_test.shape}")   # (2000, 5)
+
+# МАСШТАБИРОВАНИЕ ПРИЗНАКОВ — важно для многих алгоритмов
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)  # fit только на train!
+X_test_scaled = scaler.transform(X_test)         # только transform на test</code></pre>
+
+<h2>Underfitting vs Overfitting — главный баланс в ML</h2>
+
+<pre class="code-block"><code">"""
+UNDERFITTING (недообучение):
+- Модель слишком простая
+- Плохо работает и на train, и на test
+- Решение: усложни модель, добавь признаки
+
+OVERFITTING (переобучение):
+- Модель слишком сложная, "запомнила" train данные
+- Отлично на train, плохо на test
+- Решение: регуляризация, больше данных, упрощение модели
+
+ПРИМЕР:
+- Train accuracy: 99%, Test accuracy: 62% → OVERFITTING
+- Train accuracy: 65%, Test accuracy: 63% → UNDERFITTING  
+- Train accuracy: 87%, Test accuracy: 85% → ХОРОШИЙ БАЛАНС
+
+Bias-Variance Tradeoff:
+- Высокий bias → underfitting
+- Высокая variance → overfitting
+- Нужен баланс (sweet spot)
+"""</code></pre>
+
+<div class="key-point">
+  <span class="key-icon">🎯</span>
+  <p><strong>Связь с твоим опытом разметки:</strong> Когда ты проверял качество разметки для обучения нейросетей — ты напрямую влиял на качество y_train. Плохая разметка → плохой y_train → неверно обученная модель. Теперь ты понимаешь почему контроль качества разметки так критичен!</p>
+</div>
+
+<h2>Кросс-валидация — правильная оценка модели</h2>
+
+<pre class="code-block"><code>from sklearn.model_selection import cross_val_score
+from sklearn.linear_model import LogisticRegression
+
+model = LogisticRegression(max_iter=1000)
+
+# K-Fold кросс-валидация: разбиваем данные на K частей
+# Обучаем на K-1, тестируем на 1, повторяем K раз
+cv_scores = cross_val_score(
+    model, X_train_scaled, y_train,
+    cv=5,           # 5-fold
+    scoring='roc_auc'  # метрика
+)
+
+print(f"CV scores: {cv_scores}")
+print(f"Среднее: {cv_scores.mean():.4f}")
+print(f"Std: {cv_scores.std():.4f}")
+
+# Если std большой — модель нестабильна (высокая variance)
+# Кросс-валидация даёт более честную оценку чем single split</code></pre>
+
+<div class="summary-block">
+  <h3>📌 Итоги урока</h3>
+  <ul>
+    <li>ML находит правила в данных автоматически (vs ручные if-else)</li>
+    <li>Три типа: Классификация, Регрессия, Кластеризация</li>
+    <li>X (признаки) и y (цель) — основные объекты ML</li>
+    <li>Train/Test split — обязательно! Никогда не оценивай на train</li>
+    <li>Масштабирование fit только на train, transform на оба!</li>
+    <li>Overfitting/Underfitting — главный баланс в ML</li>
+    <li>Кросс-валидация — более честная оценка модели</li>
+  </ul>
+</div>`,
+          quiz: [
+            { q: 'В чём ключевое отличие ML от традиционного программирования?', opts: ['ML использует только Python', 'ML требует GPU', 'В традиционном: Данные + Правила → Ответы; В ML: Данные + Ответы → Правила', 'ML всегда быстрее'], ans: 2, exp: 'Традиционное ПО: мы пишем правила. ML: модель сама находит правила из данных. Это меняет всё!' },
+            { q: 'Почему scaler.fit_transform() вызывается только на train данных?', opts: ['Так быстрее', 'Чтобы не было data leakage — статистика test не должна влиять на нормализацию', 'Test данные не нуждаются в масштабировании', 'Так принято в Scikit-learn по умолчанию'], ans: 1, exp: 'Data leakage: если fit на всех данных, статистика test попадёт в train нормализацию. Правило: fit только на train, transform на оба.' },
+            { q: 'Train accuracy: 98%, Test accuracy: 61%. Что произошло?', opts: ['Underfitting', 'Хорошая модель', 'Overfitting', 'Нужно больше данных'], ans: 2, exp: 'Overfitting: модель "запомнила" тренировочные данные, но не научилась обобщать. Огромный разрыв train/test — признак переобучения.' },
+            { q: 'Задача: "Спрогнозировать сумму следующей транзакции клиента". Тип задачи?', opts: ['Классификация', 'Кластеризация', 'Регрессия', 'Обнаружение аномалий'], ans: 2, exp: 'Регрессия — предсказание числового значения. Классификация — предсказание категории (категориального значения).' },
+            { q: 'Зачем нужна кросс-валидация?', opts: ['Ускорить обучение модели', 'Более честная оценка модели за счёт K прогонов на разных разбивках', 'Заменить нормализацию данных', 'Автоматически подобрать гиперпараметры'], ans: 1, exp: 'K-Fold CV разбивает данные K раз, каждый раз используя разную часть как test. Итоговая оценка намного стабильнее одного разбиения.' }
+          ]
+        },
+        {
+          id: 'm4l2',
+          title: 'Метрики качества ML-моделей',
+          subtitle: 'Accuracy, AUC-ROC, F1, RMSE — что и когда использовать',
+          readTime: 13,
+          xp: 70,
+          content: `
+<div class="lesson-intro">
+  <p class="lead">Выбор неправильной метрики — одна из самых дорогих ошибок в ML. В банке можно оптимизировать accuracy до 99.9% и при этом создать бесполезную модель антифрода. Почему? Читай дальше.</p>
+</div>
+
+<h2>Матрица ошибок (Confusion Matrix)</h2>
+
+<pre class="code-block"><code>from sklearn.metrics import confusion_matrix, classification_report
+import numpy as np
+
+# Представь: модель определяет мошеннические транзакции
+# 0 = обычная транзакция, 1 = мошенничество
+
+y_true = np.array([0, 0, 0, 1, 0, 1, 0, 0, 1, 0])
+y_pred = np.array([0, 0, 0, 1, 0, 0, 0, 1, 1, 0])
+
+cm = confusion_matrix(y_true, y_pred)
+print("Confusion Matrix:")
+print(cm)
+# [[TN, FP],
+#  [FN, TP]]
+
+# TN (True Negative):  4 — правильно определили обычные
+# FP (False Positive): 1 — ложная тревога (паника клиента)
+# FN (False Negative): 1 — пропустили мошенничество (ДОРОГО!)
+# TP (True Positive):  2 — поймали мошенников (хорошо!)
+
+print(classification_report(y_true, y_pred, 
+      target_names=['Обычная', 'Мошенничество']))</code></pre>
+
+<h2>Precision, Recall, F1</h2>
+
+<pre class="code-block"><code>"""
+Precision (Точность) = TP / (TP + FP)
+"Из всех, кого мы назвали мошенниками — сколько реально ими были?"
+Высокий Precision → мало ложных тревог
+
+Recall (Полнота) = TP / (TP + FN)  
+"Из всех реальных мошенников — скольких мы поймали?"
+Высокий Recall → мало пропущенных мошенников
+
+F1-Score = 2 * (Precision * Recall) / (Precision + Recall)
+Баланс между Precision и Recall
+
+TRADE-OFF: Улучшая Precision, ухудшаешь Recall и наоборот!
+
+ВЫБОР МЕТРИКИ ПО ЗАДАЧЕ:
+- Антифрод → Recall важнее (дороже пропустить мошенника)
+- Спам-фильтр → Precision важнее (дороже потерять важное письмо)
+- Медицинский диагноз → Recall (дороже не выявить болезнь)
+- Кредитный скоринг → F1 или AUC-ROC (нужен баланс)
+"""
+
+from sklearn.metrics import precision_score, recall_score, f1_score
+
+precision = precision_score(y_true, y_pred)
+recall = recall_score(y_true, y_pred)
+f1 = f1_score(y_true, y_pred)
+
+print(f"Precision: {precision:.2f}")
+print(f"Recall:    {recall:.2f}")
+print(f"F1-Score:  {f1:.2f}")</code></pre>
+
+<h2>AUC-ROC — главная метрика в банковском ML</h2>
+
+<pre class="code-block"><code">from sklearn.metrics import roc_auc_score, roc_curve
+import matplotlib.pyplot as plt
+
+# В отличие от accuracy/f1, AUC-ROC не зависит от порога
+# Модель предсказывает вероятности, AUC оценивает качество ранжирования
+
+y_true = np.array([0, 0, 1, 0, 1, 1, 0, 0, 1, 0])
+y_scores = np.array([0.1, 0.2, 0.8, 0.15, 0.7, 0.9, 0.3, 0.25, 0.75, 0.05])
+
+auc = roc_auc_score(y_true, y_scores)
+print(f"AUC-ROC: {auc:.4f}")
+
+# Интерпретация AUC:
+# 0.5 — случайное угадывание (бесполезная модель)
+# 0.7 — приемлемо
+# 0.8 — хорошо (порог для прода в большинстве банков)
+# 0.9 — отлично
+# 1.0 — идеально (подозрительно, скорее всего overfitting)
+
+# ROC кривая
+fpr, tpr, thresholds = roc_curve(y_true, y_scores)
+plt.figure(figsize=(8, 6))
+plt.plot(fpr, tpr, 'b-', label=f'Наша модель (AUC = {auc:.2f})')
+plt.plot([0, 1], [0, 1], 'r--', label='Случайная модель (AUC = 0.5)')
+plt.xlabel('False Positive Rate')
+plt.ylabel('True Positive Rate (Recall)')
+plt.title('ROC кривая')
+plt.legend()
+plt.savefig('roc_curve.png')</code></pre>
+
+<div class="key-point">
+  <span class="key-icon">💡</span>
+  <p><strong>Парадокс accuracy:</strong> Если 99% транзакций честные, модель которая всегда говорит "честная" имеет accuracy = 99%. Но AUC-ROC = 0.5 (случайная!). Именно поэтому в банках используют AUC-ROC и Gini коэффициент.</p>
+</div>
+
+<h2>Метрики регрессии</h2>
+
+<pre class="code-block"><code>from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
+
+y_true = np.array([100000, 85000, 120000, 95000, 110000])
+y_pred = np.array([105000, 80000, 115000, 98000, 108000])
+
+# MAE — средняя абсолютная ошибка (в тех же единицах)
+mae = mean_absolute_error(y_true, y_pred)
+print(f"MAE: {mae:,.0f} руб")  # среднее отклонение прогноза
+
+# RMSE — чувствительна к большим ошибкам
+rmse = np.sqrt(mean_squared_error(y_true, y_pred))
+print(f"RMSE: {rmse:,.0f} руб")
+
+# R² (R-squared) — "коэффициент детерминации"
+# 0 = модель как среднее, 1 = идеальная модель
+r2 = r2_score(y_true, y_pred)
+print(f"R²: {r2:.4f}")  # например 0.95 — модель объясняет 95% дисперсии
+
+# MAPE — средняя абсолютная процентная ошибка
+mape = np.mean(np.abs((y_true - y_pred) / y_true)) * 100
+print(f"MAPE: {mape:.1f}%")</code></pre>
+
+<div class="summary-block">
+  <h3>📌 Итоги урока</h3>
+  <ul>
+    <li>Confusion matrix: TN, FP, FN, TP — основа всех метрик</li>
+    <li>Precision: из наших предсказаний — сколько верных?</li>
+    <li>Recall: из всех реальных — сколько мы нашли?</li>
+    <li>Precision ↑ → Recall ↓ (trade-off)</li>
+    <li>AUC-ROC — главная метрика для бинарной классификации в банках</li>
+    <li>Accuracy бесполезна на несбалансированных данных</li>
+    <li>R² и RMSE — для задач регрессии</li>
+  </ul>
+</div>`,
+          quiz: [
+            { q: 'Что такое False Negative (FN) в задаче антифрода?', opts: ['Обычная транзакция, которую назвали мошеннической', 'Мошенническая транзакция, которую пропустили', 'Правильно определённое мошенничество', 'Правильно определённая обычная транзакция'], ans: 1, exp: 'FN — мы предсказали 0 (обычная), а в реальности 1 (мошенничество). Это самая дорогая ошибка в антифроде — банк теряет деньги!' },
+            { q: 'Почему accuracy не подходит для задачи антифрода (99% честных)?', opts: ['Accuracy не работает для бинарной классификации', 'Модель "говори всегда нет" имеет accuracy 99%, но бесполезна', 'Accuracy требует balanced данных', 'AUC-ROC просто удобнее'], ans: 1, exp: 'При 99% честных транзакций: модель, всегда предсказывающая "честная", имеет accuracy 99%, но AUC-ROC = 0.5 (случайная). Accuracy вводит в заблуждение!' },
+            { q: 'AUC-ROC = 0.5 означает:', opts: ['Идеальная модель', 'Хорошая модель', 'Случайное угадывание', 'Модель работает наоборот'], ans: 2, exp: 'AUC = 0.5 — модель не лучше случайного угадывания (монетки). В банках порог принятия в прод обычно AUC >= 0.75-0.80.' },
+            { q: 'Для задачи медицинской диагностики (пропустить болезнь дорого) какая метрика приоритетнее?', opts: ['Precision', 'Accuracy', 'Recall', 'RMSE'], ans: 2, exp: 'Recall (полнота) = из всех больных — скольких нашли. Пропустить больного (FN) дороже ложной тревоги (FP), поэтому максимизируем Recall.' },
+            { q: 'R² = 0.87 в задаче регрессии означает:', opts: ['87% предсказаний точные', 'Модель объясняет 87% дисперсии целевой переменной', 'RMSE = 87', 'Средняя ошибка 13%'], ans: 1, exp: 'R² (коэффициент детерминации) — доля дисперсии y, объяснённая моделью. R²=0.87 хороший результат для большинства задач.' }
+          ]
+        }
+      ]
+    },
+
+    // ═══════════════════════════════════════════════
+    // MODULE 5 — Алгоритмы ML
+    // ═══════════════════════════════════════════════
+    {
+      id: 'm5',
+      title: 'Алгоритмы ML',
+      subtitle: 'От линейных моделей до Gradient Boosting',
+      icon: '⚡',
+      color: '#ef4444',
+      estimatedDays: 10,
+      lessons: [
+        {
+          id: 'm5l1',
+          title: 'Линейные модели: регрессия и классификация',
+          subtitle: 'Линейная регрессия, Логистическая регрессия, Ridge/Lasso',
+          readTime: 15,
+          xp: 80,
+          content: `
+<div class="lesson-intro">
+  <p class="lead">Линейные модели — первое что нужно знать любому DS. Они простые, быстрые, интерпретируемые. В банках регуляторы часто требуют именно интерпретируемые модели. Понять линейные — значит понять фундамент ML.</p>
+</div>
+
+<h2>Линейная регрессия — прогноз числа</h2>
+
+<pre class="code-block"><code">from sklearn.linear_model import LinearRegression
+from sklearn.metrics import r2_score, mean_absolute_error
+import numpy as np
+
+# Задача: предсказать лимит кредитной карты по доходу и возрасту
+# y = w0 + w1*income + w2*age + epsilon
+
+X_train = np.array([
+    [50000, 25], [80000, 35], [120000, 45],
+    [45000, 30], [95000, 40], [60000, 28]
+])
+y_train = np.array([50000, 100000, 180000, 40000, 130000, 70000])
+
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+print("Коэффициенты:")
+print(f"  Intercept (w0): {model.intercept_:.2f}")
+print(f"  Income (w1):    {model.coef_[0]:.4f}")
+print(f"  Age (w2):       {model.coef_[1]:.2f}")
+
+# Интерпретация: w1 = 1.2 значит
+# при росте дохода на 1 руб → лимит растёт на 1.2 руб
+
+# Предсказание
+new_client = np.array([[70000, 32]])
+predicted_limit = model.predict(new_client)
+print(f"\nПрогноз лимита: {predicted_limit[0]:,.0f} руб")</code></pre>
+
+<h2>Логистическая регрессия — классификация</h2>
+
+<pre class="code-block"><code">from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import classification_report, roc_auc_score
+
+# Несмотря на "регрессию" в названии — это классификатор!
+# Предсказывает ВЕРОЯТНОСТЬ принадлежности к классу [0,1]
+# Используется сигмоид-функция: σ(z) = 1 / (1 + e^(-z))
+
+model = LogisticRegression(
+    C=1.0,              # обратная сила регуляризации (1/lambda)
+    penalty='l2',       # L2-регуляризация (Ridge)
+    max_iter=1000,
+    random_state=42
+)
+model.fit(X_train_scaled, y_train)
+
+# Вероятности, а не просто 0/1
+probabilities = model.predict_proba(X_test_scaled)
+print("Вероятности [P(класс=0), P(класс=1)]:")
+print(probabilities[:5])
+
+# Изменение порога решения (по умолчанию 0.5)
+threshold = 0.3  # понизить порог → выше Recall, ниже Precision
+y_pred_custom = (probabilities[:, 1] >= threshold).astype(int)
+
+print(f"AUC-ROC: {roc_auc_score(y_test, probabilities[:, 1]):.4f}")
+print(classification_report(y_test, y_pred_custom))</code></pre>
+
+<h2>Регуляризация: Ridge и Lasso</h2>
+
+<pre class="code-block"><code">from sklearn.linear_model import Ridge, Lasso, ElasticNet
+
+"""
+Без регуляризации: модель может переобучиться на train данных
+Регуляризация штрафует за большие коэффициенты → проще модель
+
+L2 (Ridge): штраф = lambda * sum(w²)
+- Коэффициенты уменьшаются, но не обнуляются
+- Хороша при мультиколлинеарности
+- Использовать когда все признаки важны
+
+L1 (Lasso): штраф = lambda * sum(|w|)
+- Некоторые коэффициенты обнуляются до нуля!
+- Встроенный отбор признаков (feature selection)
+- Использовать когда много лишних признаков
+
+ElasticNet: L1 + L2 комбинация
+"""
+
+# Ridge — все признаки, но меньшие коэффициенты
+ridge = Ridge(alpha=1.0)  # alpha = lambda (сила регуляризации)
+ridge.fit(X_train_scaled, y_train)
+
+# Lasso — часть коэффициентов = 0 (feature selection!)
+lasso = Lasso(alpha=0.01)
+lasso.fit(X_train_scaled, y_train)
+print("Ненулевые признаки (Lasso):", 
+      sum(lasso.coef_ != 0), "из", len(lasso.coef_))</code></pre>
+
+<div class="key-point">
+  <span class="key-icon">🏦</span>
+  <p><strong>В Сбере и других банках</strong> логистическая регрессия часто используется в скоринговых картах — они легко объяснимы клиентам и регулятору. Знание interpretability (объяснимости) модели — важный навык DS в финансах.</p>
+</div>
+
+<div class="summary-block">
+  <h3>📌 Итоги урока</h3>
+  <ul>
+    <li>Линейная регрессия: y = w0 + w1*x1 + ... Коэффициент = влияние признака</li>
+    <li>Логистическая регрессия: предсказывает вероятности через сигмоид</li>
+    <li>Порог классификации можно менять (не всегда 0.5!)</li>
+    <li>Ridge (L2): уменьшает коэффициенты, все признаки важны</li>
+    <li>Lasso (L1): обнуляет лишние признаки (отбор признаков)</li>
+    <li>Интерпретируемость линейных моделей важна в банковском регулировании</li>
+  </ul>
+</div>`,
+          quiz: [
+            { q: 'Логистическая регрессия предсказывает:', opts: ['Числовое значение', 'Категорию напрямую', 'Вероятность принадлежности к классу [0,1]', 'Ранг объекта'], ans: 2, exp: 'Логистическая регрессия применяет сигмоид к линейной комбинации признаков, получая вероятность P(y=1|X). Потом порог решения (default 0.5) определяет класс.' },
+            { q: 'В чём главное преимущество Lasso (L1) перед Ridge (L2)?', opts: ['Lasso быстрее обучается', 'Lasso автоматически обнуляет лишние признаки (feature selection)', 'Lasso лучше при мультиколлинеарности', 'Lasso даёт более высокий AUC'], ans: 1, exp: 'L1-регуляризация создаёт разреженные решения — некоторые веса точно равны нулю. Это встроенный отбор признаков, что удобно при сотнях признаков.' },
+            { q: 'Зачем менять порог классификации с 0.5 до 0.3 в задаче антифрода?', opts: ['Увеличить Accuracy', 'Увеличить Recall (поймать больше мошенников)', 'Увеличить Precision', 'Ускорить предсказание'], ans: 1, exp: 'Снижение порога → больше предсказаний "мошенник" → выше Recall (меньше пропусков), но ниже Precision (больше ложных тревог). Trade-off!' },
+            { q: 'Что означает коэффициент w1 = 0.0015 при признаке "доход" в линейной регрессии?', opts: ['Признак неважен', 'При росте дохода на 1 руб, предсказание растёт на 0.0015', 'Признак нужно удалить', 'Модель переобучена'], ans: 1, exp: 'Каждый коэффициент в линейной модели — влияние одной единицы признака на предсказание. Это и делает модель интерпретируемой!' },
+            { q: 'Параметр C=0.01 в LogisticRegression означает:', opts: ['Слабую регуляризацию', 'Сильную регуляризацию (C = 1/lambda)', '100% точность', 'Количество итераций'], ans: 1, exp: 'C = 1/lambda. Маленький C → сильная регуляризация → более простая модель. Большой C → слабая регуляризация → может переобучиться.' }
+          ]
+        },
+        {
+          id: 'm5l2',
+          title: 'Деревья и ансамбли: Random Forest и Gradient Boosting',
+          subtitle: 'CatBoost, XGBoost, LightGBM — победители Kaggle и Сбера',
+          readTime: 18,
+          xp: 90,
+          content: `
+<div class="lesson-intro">
+  <p class="lead">Gradient Boosting — алгоритм, который выигрывает 90% соревнований по табличным данным. CatBoost — создан Яндексом и активно используется в Сбере. Это один из важнейших алгоритмов который нужно знать досконально.</p>
+</div>
+
+<h2>Дерево решений — базовый блок</h2>
+
+<pre class="code-block"><code">from sklearn.tree import DecisionTreeClassifier, export_text
+import pandas as pd
+
+# Дерево решений — серия if-else вопросов
+# Алгоритм сам находит оптимальные разбиения
+
+model = DecisionTreeClassifier(
+    max_depth=3,           # максимальная глубина (предотвращение overfitting)
+    min_samples_split=20,  # минимум объектов для разбиения
+    criterion='gini',      # критерий разбиения (gini или entropy)
+    random_state=42
+)
+model.fit(X_train, y_train)
+
+# Визуализация дерева (читаемая)
+print(export_text(model, feature_names=feature_names, max_depth=2))
+
+# Feature importance — важность признаков
+importance = pd.Series(
+    model.feature_importances_,
+    index=feature_names
+).sort_values(ascending=False)
+print("\nВажность признаков:")
+print(importance)</code></pre>
+
+<h2>Random Forest — ансамбль деревьев</h2>
+
+<pre class="code-block"><code">from sklearn.ensemble import RandomForestClassifier
+
+"""
+Идея: вместо одного дерева обучаем N деревьев на разных 
+подвыборках данных и признаков, потом голосуем.
+
+Bagging (Bootstrap Aggregating):
+1. Берём случайную выборку с возвращением (bootstrap)
+2. Обучаем дерево на этой подвыборке
+3. Каждое дерево видит только random subset признаков
+4. Итог = большинство голосов / среднее
+
+Преимущества Random Forest:
+✅ Устойчив к выбросам
+✅ Мало гиперпараметров
+✅ Работает "из коробки" без нормализации
+✅ Хорошо показывает важность признаков
+✅ Нет проблемы overfitting как у одного дерева
+
+Недостатки:
+❌ Медленнее на инференсе чем одно дерево
+❌ Меньше точность чем у Gradient Boosting
+"""
+
+rf = RandomForestClassifier(
+    n_estimators=200,       # количество деревьев
+    max_depth=10,           # глубина каждого дерева
+    max_features='sqrt',    # sqrt(n_features) признаков на каждом узле
+    min_samples_leaf=5,
+    n_jobs=-1,              # использовать все ядра CPU
+    random_state=42
+)
+rf.fit(X_train, y_train)
+
+# Оценка
+from sklearn.metrics import roc_auc_score
+y_proba = rf.predict_proba(X_test)[:, 1]
+print(f"Random Forest AUC-ROC: {roc_auc_score(y_test, y_proba):.4f}")</code></pre>
+
+<h2>Gradient Boosting — лучший алгоритм для табличных данных</h2>
+
+<pre class="code-block"><code">"""
+Gradient Boosting — последовательный ансамбль:
+Каждое следующее дерево учится на ОШИБКАХ предыдущих!
+
+Алгоритм:
+1. F0(x) = среднее y (простое начальное предсказание)
+2. r1 = y - F0(x)  (остатки — ошибки)
+3. Обучаем дерево h1 на остатках r1
+4. F1(x) = F0(x) + lr * h1(x)  (lr = learning rate, шаг)
+5. r2 = y - F1(x)  (новые остатки)
+6. Повторяем N раз...
+
+Результат: Fn(x) = F0 + lr*h1 + lr*h2 + ... + lr*hn
+
+CatBoost от Яндекса — лучший для:
+✅ Категориальных признаков (встроенная обработка!)
+✅ Быстрое обучение на CPU
+✅ Хороший базовый результат без тюнинга
+✅ Широко используется в Сбере, Яндексе, ВТБ
+"""
+
+# CatBoost
+from catboost import CatBoostClassifier
+
+# Определяем категориальные признаки
+cat_features = ['region', 'product_type', 'employment_type']
+
+model = CatBoostClassifier(
+    iterations=1000,        # количество деревьев
+    learning_rate=0.05,     # шаг (меньше = лучше, но медленнее)
+    depth=6,                # глубина каждого дерева
+    l2_leaf_reg=3,          # L2-регуляризация
+    cat_features=cat_features,  # автообработка категорий!
+    eval_metric='AUC',
+    early_stopping_rounds=50,   # остановка если нет улучшения
+    random_seed=42,
+    verbose=100             # логирование каждые 100 итераций
+)
+
+model.fit(
+    X_train, y_train,
+    eval_set=(X_val, y_val),
+    use_best_model=True
+)
+
+print(f"Best iteration: {model.best_iteration_}")
+y_pred = model.predict_proba(X_test)[:, 1]
+print(f"CatBoost AUC-ROC: {roc_auc_score(y_test, y_pred):.4f}")</code></pre>
+
+<h2>Подбор гиперпараметров (Hyperparameter Tuning)</h2>
+
+<pre class="code-block"><code">from sklearn.model_selection import RandomizedSearchCV
+from scipy.stats import randint, uniform
+
+# GridSearch — перебор всех комбинаций (долго!)
+# RandomizedSearch — случайная выборка (быстрее, почти так же хорошо)
+
+param_dist = {
+    'n_estimators': randint(100, 500),
+    'max_depth': randint(3, 15),
+    'learning_rate': uniform(0.01, 0.2),
+    'min_child_samples': randint(5, 50)
+}
+
+from sklearn.ensemble import GradientBoostingClassifier
+model = GradientBoostingClassifier(random_state=42)
+
+search = RandomizedSearchCV(
+    model, param_dist,
+    n_iter=50,       # 50 случайных комбинаций
+    cv=5,            # 5-fold кросс-валидация
+    scoring='roc_auc',
+    n_jobs=-1,       # параллельно
+    random_state=42
+)
+search.fit(X_train, y_train)
+
+print(f"Лучшие параметры: {search.best_params_}")
+print(f"Лучший AUC: {search.best_score_:.4f}")</code></pre>
+
+<div class="key-point">
+  <span class="key-icon">🏆</span>
+  <p><strong>Совет по карьере в Сбере:</strong> На DS-интервью в Сбере часто спрашивают: "Чем CatBoost отличается от XGBoost?" Ключевые ответы: CatBoost лучше обрабатывает категориальные признаки (Ordered Target Statistics), меньше переобучается на малых данных, быстрее на CPU. Эти детали важны!</p>
+</div>
+
+<div class="summary-block">
+  <h3>📌 Итоги урока</h3>
+  <ul>
+    <li>Дерево решений: интерпретируемо, но переобучается</li>
+    <li>Random Forest: параллельный ансамбль (bagging), устойчив к выбросам</li>
+    <li>Gradient Boosting: последовательный, учится на ошибках, лучший для таблиц</li>
+    <li>CatBoost (Яндекс): встроенная обработка категорий, popular в Сбере</li>
+    <li>Early stopping: останавливаем обучение при отсутствии прогресса</li>
+    <li>RandomizedSearchCV: эффективный подбор гиперпараметров</li>
+  </ul>
+</div>`,
+          quiz: [
+            { q: 'В чём главная идея Gradient Boosting?', opts: ['Параллельное обучение множества деревьев', 'Каждое следующее дерево учится на ошибках предыдущих', 'Использование нейросетей', 'Бэггинг с случайным выбором признаков'], ans: 1, exp: 'Boosting — последовательный ансамбль. Каждая итерация строит дерево для предсказания ОСТАТКОВ (ошибок) предыдущей модели. Это мощнее bagging.' },
+            { q: 'Почему CatBoost лучше других Gradient Boosting реализаций для категориальных данных?', opts: ['CatBoost быстрее обучается', 'CatBoost автоматически обрабатывает категориальные признаки через Ordered Target Statistics', 'CatBoost всегда даёт более высокий AUC', 'CatBoost работает на GPU'], ans: 1, exp: 'В XGBoost/LightGBM нужно вручную кодировать категории (OHE, Label Encoding). CatBoost применяет собственный алгоритм Ordered Target Statistics, избегая target leakage.' },
+            { q: 'Что такое early_stopping_rounds=50 в CatBoost?', opts: ['Обучать ровно 50 итераций', 'Остановить обучение если 50 итераций подряд нет улучшения на eval set', 'Минимум 50 итераций перед оценкой', 'Batch size = 50'], ans: 1, exp: 'Early stopping предотвращает overfitting: если 50 итераций подряд качество на validation set не улучшается — обучение прекращается.' },
+            { q: 'Чем Random Forest (bagging) отличается от Gradient Boosting?', opts: ['Random Forest использует нейросети', 'Random Forest: параллельные деревья на разных данных; GB: последовательные, каждое учится на ошибках', 'Random Forest всегда точнее', 'Нет разницы'], ans: 1, exp: 'Bagging (RF): параллельно, независимые деревья, цель — уменьшить variance. Boosting (GB): последовательно, каждое дерево исправляет ошибки, цель — уменьшить bias.' },
+            { q: 'Зачем нужен learning_rate в Gradient Boosting?', opts: ['Скорость работы на CPU', 'Контролирует вклад каждого дерева, предотвращая overfitting', 'Количество итераций', 'Максимальная глубина дерева'], ans: 1, exp: 'Learning rate (η) масштабирует вклад каждого дерева: F = F + η*h. Меньший η → более осторожные шаги, нужно больше деревьев, но лучше обобщение.' }
+          ]
+        }
+      ]
+    },
+
+    // ═══════════════════════════════════════════════
+    // MODULE 6 — SQL для DS
+    // ═══════════════════════════════════════════════
+    {
+      id: 'm6',
+      title: 'SQL для Data Science',
+      subtitle: 'Язык данных в каждом банке',
+      icon: '🗄️',
+      color: '#06b6d4',
+      estimatedDays: 5,
+      lessons: [
+        {
+          id: 'm6l1',
+          title: 'SQL от основ до продвинутых запросов',
+          subtitle: 'SELECT, JOIN, GROUP BY, подзапросы',
+          readTime: 16,
+          xp: 75,
+          content: `
+<div class="lesson-intro">
+  <p class="lead">SQL — обязательный навык для DS в любом банке. В Сбере данные хранятся в Oracle, PostgreSQL, Greenplum и Hadoop/Hive. Каждый день DS-аналитики пишут десятки SQL запросов. Без SQL не получить данные — без данных нет модели.</p>
+</div>
+
+<h2>Основы SELECT</h2>
+
+<pre class="code-block"><code>-- Базовый запрос
+SELECT 
+    client_id,
+    full_name,
+    age,
+    income,
+    risk_score
+FROM clients
+WHERE age > 25
+  AND income > 50000
+  AND risk_score < 0.5
+ORDER BY risk_score DESC
+LIMIT 100;
+
+-- Псевдонимы (alias)
+SELECT 
+    client_id AS id,
+    CONCAT(first_name, ' ', last_name) AS full_name,
+    income / 1000.0 AS income_k  -- доход в тысячах
+FROM clients;
+
+-- CASE WHEN — условная логика
+SELECT 
+    client_id,
+    income,
+    CASE 
+        WHEN income < 30000 THEN 'низкий'
+        WHEN income < 80000 THEN 'средний'
+        WHEN income < 150000 THEN 'высокий'
+        ELSE 'премиум'
+    END AS income_segment
+FROM clients;</code></pre>
+
+<h2>JOIN — объединение таблиц</h2>
+
+<pre class="code-block"><code">-- INNER JOIN — только совпадающие записи
+SELECT 
+    c.client_id,
+    c.full_name,
+    l.amount AS loan_amount,
+    l.rate,
+    l.status
+FROM clients c
+INNER JOIN loans l ON c.client_id = l.client_id
+WHERE l.status = 'active';
+
+-- LEFT JOIN — все клиенты, даже без кредитов
+SELECT 
+    c.client_id,
+    c.full_name,
+    COALESCE(l.amount, 0) AS loan_amount,  -- NULL → 0
+    CASE WHEN l.client_id IS NULL THEN 0 ELSE 1 END AS has_loan
+FROM clients c
+LEFT JOIN loans l ON c.client_id = l.client_id;
+
+-- Несколько JOIN
+SELECT 
+    c.client_id,
+    c.full_name,
+    p.product_name,
+    t.amount AS last_transaction,
+    t.transaction_date
+FROM clients c
+JOIN client_products cp ON c.client_id = cp.client_id
+JOIN products p ON cp.product_id = p.product_id
+LEFT JOIN transactions t ON c.client_id = t.client_id
+    AND t.transaction_date = (
+        SELECT MAX(transaction_date) 
+        FROM transactions t2 
+        WHERE t2.client_id = c.client_id
+    );</code></pre>
+
+<h2>GROUP BY и агрегация</h2>
+
+<pre class="code-block"><code">-- Статистика по сегментам (аналог Pandas groupby)
+SELECT 
+    region,
+    product_type,
+    COUNT(*) AS n_clients,
+    AVG(income) AS avg_income,
+    MEDIAN(income) AS median_income,  -- в PostgreSQL
+    SUM(loan_amount) AS total_loans,
+    AVG(risk_score) AS avg_risk,
+    SUM(CASE WHEN default_flag = 1 THEN 1 ELSE 0 END) AS n_defaults,
+    AVG(default_flag) * 100 AS default_rate_pct
+FROM clients
+GROUP BY region, product_type
+HAVING COUNT(*) > 100  -- только группы с 100+ клиентами
+ORDER BY default_rate_pct DESC;
+
+-- Подзапросы
+SELECT 
+    client_id,
+    income,
+    (income - avg_income) / std_income AS income_zscore
+FROM clients
+CROSS JOIN (
+    SELECT 
+        AVG(income) AS avg_income,
+        STDDEV(income) AS std_income
+    FROM clients
+) stats;</code></pre>
+
+<h2>Оконные функции — аналитический SQL</h2>
+
+<pre class="code-block"><code">-- ROW_NUMBER, RANK, DENSE_RANK
+SELECT 
+    client_id,
+    income,
+    risk_score,
+    -- Номер строки в рамках каждого региона (по убыванию дохода)
+    ROW_NUMBER() OVER (PARTITION BY region ORDER BY income DESC) AS rank_in_region,
+    -- Ранг с пропусками при одинаковых значениях
+    RANK() OVER (ORDER BY risk_score DESC) AS risk_rank,
+    -- Процентиль клиента по доходу
+    PERCENT_RANK() OVER (ORDER BY income) AS income_percentile
+FROM clients;
+
+-- LAG/LEAD — сдвиг по времени (очень полезно!)
+SELECT 
+    client_id,
+    transaction_date,
+    amount,
+    -- Предыдущая транзакция
+    LAG(amount, 1) OVER (PARTITION BY client_id ORDER BY transaction_date) AS prev_amount,
+    -- Изменение суммы
+    amount - LAG(amount, 1) OVER (PARTITION BY client_id ORDER BY transaction_date) AS amount_change,
+    -- Скользящее среднее за 3 месяца
+    AVG(amount) OVER (
+        PARTITION BY client_id 
+        ORDER BY transaction_date 
+        ROWS BETWEEN 2 PRECEDING AND CURRENT ROW
+    ) AS rolling_avg_3m
+FROM transactions;
+
+-- Топ-1 продукт по выручке в каждом регионе
+WITH ranked_products AS (
+    SELECT 
+        region,
+        product_name,
+        SUM(revenue) AS total_revenue,
+        ROW_NUMBER() OVER (PARTITION BY region ORDER BY SUM(revenue) DESC) AS rn
+    FROM sales
+    GROUP BY region, product_name
+)
+SELECT region, product_name, total_revenue
+FROM ranked_products
+WHERE rn = 1;</code></pre>
+
+<div class="key-point">
+  <span class="key-icon">🎯</span>
+  <p><strong>Оконные функции</strong> — это то что отличает Junior DS от Middle. В Сбере часто создают признаки для ML-моделей прямо в SQL через LAG/LEAD и rolling windows. Знание оконных функций = конкурентное преимущество на интервью.</p>
+</div>
+
+<div class="summary-block">
+  <h3>📌 Итоги урока</h3>
+  <ul>
+    <li>SELECT + WHERE + ORDER BY — базовая выборка данных</li>
+    <li>CASE WHEN — условная логика прямо в SQL</li>
+    <li>INNER JOIN: только совпадения. LEFT JOIN: все из левой таблицы</li>
+    <li>GROUP BY + HAVING — агрегация с фильтрацией групп</li>
+    <li>Оконные функции: ROW_NUMBER, RANK, LAG/LEAD — для временных рядов</li>
+    <li>CTE (WITH) — читаемые подзапросы</li>
+  </ul>
+</div>`,
+          quiz: [
+            { q: 'Чем HAVING отличается от WHERE?', opts: ['Нет разницы', 'WHERE фильтрует строки до группировки, HAVING — после', 'HAVING работает быстрее', 'WHERE только для числовых данных'], ans: 1, exp: 'WHERE фильтрует строки до GROUP BY. HAVING фильтрует уже сформированные группы. WHERE не может использовать агрегатные функции, HAVING — может.' },
+            { q: 'Что вернёт LEFT JOIN если для клиента нет кредитов?', opts: ['Строка не включается в результат', 'Ошибка', 'Строка клиента с NULL в столбцах таблицы loans', 'Строка с нулями'], ans: 2, exp: 'LEFT JOIN: все строки из левой таблицы. Если совпадения нет — NULL в столбцах правой таблицы. INNER JOIN бы не включил эту строку.' },
+            { q: 'Для чего нужна функция LAG() в SQL?', opts: ['Замедление запроса', 'Получить значение из предыдущей строки в окне', 'Рассчитать задержку выполнения', 'Создать индекс'], ans: 1, exp: 'LAG(column, n) возвращает значение column из n предыдущих строк в рамках окна (PARTITION BY ... ORDER BY ...). Полезна для расчёта изменений во времени.' },
+            { q: 'COALESCE(value, 0) выполняет:', opts: ['Округление до 0', 'Замену NULL на 0', 'Проверку на ноль', 'Деление на 0'], ans: 1, exp: 'COALESCE возвращает первый НЕ-NULL аргумент. COALESCE(NULL, 0) = 0. Часто используется для замены NULL значений по умолчанию.' },
+            { q: 'CTE (Common Table Expression) с ключевым словом WITH используется для:', opts: ['Ускорения запросов', 'Создания временных именованных подзапросов для читаемости', 'Создания постоянных таблиц', 'Добавления индексов'], ans: 1, exp: 'CTE создаёт именованный временный результат внутри запроса. Делает сложные запросы читаемыми, заменяет вложенные подзапросы.' }
+          ]
+        }
+      ]
+    },
+
+    // ═══════════════════════════════════════════════
+    // MODULE 7 — NLP и работа с текстом
+    // ═══════════════════════════════════════════════
+    {
+      id: 'm7',
+      title: 'NLP — Обработка текста',
+      subtitle: 'Тексты, LLM и GigaChat в Сбере',
+      icon: '💬',
+      color: '#a855f7',
+      estimatedDays: 6,
+      lessons: [
+        {
+          id: 'm7l1',
+          title: 'Основы NLP: от TF-IDF до Трансформеров',
+          subtitle: 'Токенизация, embeddings, BERT, GigaChat',
+          readTime: 17,
+          xp: 85,
+          content: `
+<div class="lesson-intro">
+  <p class="lead">Сбер активно развивает GigaChat, SberDevices и другие NLP-продукты. DS в Сбере всё чаще работают с текстовыми данными: отзывы клиентов, обращения в поддержку, описания транзакций. NLP — горячая область!</p>
+</div>
+
+<h2>Preprocessing текста</h2>
+
+<pre class="code-block"><code">import re
+import nltk
+from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
+from nltk.stem import SnowballStemmer
+
+nltk.download('punkt')
+nltk.download('stopwords')
+
+def preprocess_text(text):
+    """Препроцессинг русского текста"""
+    # 1. Нижний регистр
+    text = text.lower()
+    
+    # 2. Удаление специальных символов
+    text = re.sub(r'[^а-яёa-z0-9\s]', '', text)
+    
+    # 3. Токенизация
+    tokens = word_tokenize(text, language='russian')
+    
+    # 4. Удаление стоп-слов
+    stop_words = set(stopwords.words('russian'))
+    tokens = [t for t in tokens if t not in stop_words and len(t) > 2]
+    
+    # 5. Стемминг (обрезка до основы)
+    stemmer = SnowballStemmer('russian')
+    tokens = [stemmer.stem(t) for t in tokens]
+    
+    return ' '.join(tokens)
+
+# Пример
+review = "Ужасное обслуживание! Сотрудники не помогли с проблемой."
+processed = preprocess_text(review)
+print(processed)  # ужасн обслуживан сотрудник помог проблем</code></pre>
+
+<h2>TF-IDF — классический подход</h2>
+
+<pre class="code-block"><code">from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.linear_model import LogisticRegression
+from sklearn.pipeline import Pipeline
+
+# Задача: классификация отзывов клиентов (позитивный/негативный)
+reviews = [
+    "Отличный сервис, всё быстро",
+    "Ужасное обслуживание, долго ждал",
+    "Рекомендую, приятные сотрудники",
+    "Проблемы с кредитом, не решили",
+]
+labels = [1, 0, 1, 0]  # 1=позитив, 0=негатив
+
+# TF-IDF: Term Frequency * Inverse Document Frequency
+# TF: частота слова в документе
+# IDF: log(N/df) — насколько слово уникально
+
+vectorizer = TfidfVectorizer(
+    max_features=10000,  # топ-10k слов
+    ngram_range=(1, 2),  # униграммы + биграммы
+    min_df=2,            # слово минимум в 2 документах
+    analyzer='word'
+)
+
+# Pipeline — удобная цепочка преобразований
+pipeline = Pipeline([
+    ('tfidf', TfidfVectorizer(max_features=5000, ngram_range=(1,2))),
+    ('model', LogisticRegression(C=1.0, max_iter=1000))
+])
+
+pipeline.fit(reviews, labels)
+new_review = ["Долго ждал, плохая работа сотрудников"]
+print(pipeline.predict(new_review))          # [0] — негативный
+print(pipeline.predict_proba(new_review))    # вероятности</code></pre>
+
+<h2>Word Embeddings — векторы слов</h2>
+
+<pre class="code-block"><code>"""
+TF-IDF: слова → разреженные числовые векторы (0 и цифры)
+Word Embeddings: слова → плотные векторы (300 чисел)
+
+Ключевое свойство embeddings:
+- king - man + woman ≈ queen
+- Москва - Россия + Франция ≈ Париж
+
+Слова близкие по смыслу → близкие векторы в пространстве
+
+FastText (от Facebook/Meta):
+- Работает с подсловами (морфемами)
+- Лучше для русского (много форм слова)
+- Есть готовая русская модель от rusvectores
+"""
+
+# Загрузка предобученной модели (Word2Vec/FastText)
+from gensim.models import KeyedVectors
+
+# Скачать: http://vectors.nlpl.eu/repository/
+model = KeyedVectors.load_word2vec_format('model.bin', binary=True)
+
+# Похожие слова
+similar = model.most_similar('банк', topn=5)
+print("Слова похожие на 'банк':")
+for word, score in similar:
+    print(f"  {word}: {score:.3f}")
+
+# Вектор слова
+bank_vector = model['банк']  # numpy array shape (300,)
+
+# Сходство слов
+similarity = model.similarity('кредит', 'займ')
+print(f"Сходство кредит/займ: {similarity:.3f}")</code></pre>
+
+<h2>Трансформеры и BERT — революция NLP</h2>
+
+<pre class="code-block"><code">"""
+Трансформеры (2017, Google) — архитектура которая изменила NLP:
+- Механизм внимания (Attention) — слова "видят" контекст
+- Параллельное обучение (vs RNN)
+- Масштабируется до миллиардов параметров
+
+BERT (Bidirectional Encoder Representations from Transformers):
+- Двустороннее чтение контекста
+- Предобучен на огромных текстах (masked language modeling)
+- Дообучается (fine-tuning) под конкретную задачу
+
+Для русского языка:
+- ruBERT — от DeepPavlov (Сбер сотрудничает с командой)
+- sbert-large-nlu-ru — для sentence embeddings
+- GigaBERT — от Сбера
+"""
+
+from transformers import AutoTokenizer, AutoModel
+import torch
+
+# Загрузка ruBERT
+model_name = "cointegrated/rubert-tiny2"  # лёгкая версия
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+model = AutoModel.from_pretrained(model_name)
+
+def get_embedding(text):
+    """Получить вектор предложения"""
+    inputs = tokenizer(text, return_tensors='pt', 
+                       truncation=True, max_length=512, padding=True)
+    with torch.no_grad():
+        outputs = model(**inputs)
+    # [CLS] токен как представление предложения
+    return outputs.last_hidden_state[:, 0, :].numpy()
+
+texts = [
+    "Клиент доволен обслуживанием",
+    "Проблема с картой не решена",
+    "Отличный банк, рекомендую"
+]
+
+embeddings = [get_embedding(t) for t in texts]
+print(f"Размер эмбеддинга: {embeddings[0].shape}")</code></pre>
+
+<div class="key-point">
+  <span class="key-icon">🌟</span>
+  <p><strong>GigaChat в Сбере:</strong> GigaChat — LLM (Large Language Model) от Сбера, конкурент ChatGPT для корпоративных применений. DS в Сбере могут работать с GigaChat API для создания умных чат-ботов, анализа обращений клиентов, генерации персонализированных предложений. Это передовой edge DS в российских финансах!</p>
+</div>
+
+<div class="summary-block">
+  <h3>📌 Итоги урока</h3>
+  <ul>
+    <li>Preprocessing: нижний регистр → токенизация → стоп-слова → стемминг</li>
+    <li>TF-IDF: разреженные векторы, хорошо для классификации текстов</li>
+    <li>Word Embeddings: плотные векторы, семантическое сходство</li>
+    <li>BERT: трансформер, учитывает контекст с обеих сторон</li>
+    <li>ruBERT/GigaBERT — русскоязычные модели для Сбера</li>
+    <li>Pipeline: удобная цепочка preprocessing + модель</li>
+  </ul>
+</div>`,
+          quiz: [
+            { q: 'Что такое TF-IDF?', opts: ['Тип нейронной сети', 'Метрика качества NLP модели', 'Метод векторизации текста: частота слова * обратная частота в корпусе', 'Алгоритм токенизации'], ans: 2, exp: 'TF-IDF = Term Frequency * Inverse Document Frequency. Высокое TF-IDF у слов, которые часто встречаются в документе, но редко в корпусе в целом — значит слово характерно для этого документа.' },
+            { q: 'Что означает свойство "king - man + woman ≈ queen" в Word Embeddings?', opts: ['Арифметические операции работают со строками', 'Семантические отношения закодированы в геометрии векторного пространства', 'Word2Vec решает задачи аналогий', 'Это частное совпадение'], ans: 1, exp: 'Word Embeddings кодируют семантику в геометрию пространства. Направление вектора "мужчина→женщина" одинаково для разных пар (king/queen, actor/actress). Это свойство используется для поиска похожих документов.' },
+            { q: 'Чем BERT лучше классических Word2Vec embeddings?', opts: ['BERT быстрее работает', 'BERT учитывает контекст слова (одно слово — разный вектор в разных контекстах)', 'BERT требует меньше данных', 'BERT только для английского'], ans: 1, exp: 'Word2Vec: одно слово = один вектор. BERT: контекстуальный embedding — слово "банк" (финансовый) и "банк" (стеклянный) получают разные векторы в зависимости от контекста.' },
+            { q: 'Что такое Pipeline в sklearn для NLP?', opts: ['Инструмент для визуализации', 'Цепочка преобразований: preprocessing → модель в одном объекте', 'Параллельное обучение нескольких моделей', 'Способ сохранить модель'], ans: 1, exp: 'Pipeline объединяет шаги preprocessing и модели. pipeline.fit(X,y) обучает все шаги последовательно. pipeline.predict(X) применяет весь пайплайн к новым данным.' },
+            { q: 'Зачем удалять стоп-слова при preprocessing текста?', opts: ['Чтобы сократить время токенизации', 'Чтобы убрать частые слова без смысловой нагрузки (и, в, на) и сосредоточиться на значимых словах', 'Стоп-слова вызывают ошибки', 'Это обязательное требование BERT'], ans: 1, exp: 'Стоп-слова (предлоги, союзы, местоимения) встречаются в каждом тексте и не несут смысловой нагрузки. Их удаление снижает размерность и улучшает качество TF-IDF.' }
+          ]
+        }
+      ]
+    },
+
+    // ═══════════════════════════════════════════════
+    // MODULE 8 — MLOps и деплой
+    // ═══════════════════════════════════════════════
+    {
+      id: 'm8',
+      title: 'MLOps — Модели в продакшн',
+      subtitle: 'Git, Docker, API, мониторинг моделей',
+      icon: '🚀',
+      color: '#64748b',
+      estimatedDays: 5,
+      lessons: [
+        {
+          id: 'm8l1',
+          title: 'MLOps: от Jupyter до продакшн-системы',
+          subtitle: 'Git, версионирование, FastAPI, Docker, мониторинг',
+          readTime: 16,
+          xp: 80,
+          content: `
+<div class="lesson-intro">
+  <p class="lead">Умение построить модель — половина дела. Умение её задеплоить и поддерживать в продакшн — вторая половина. DS в крупных банках часто требуют навыки MLOps. Это твой путь к Senior-уровню.</p>
+</div>
+
+<h2>Git — контроль версий для DS</h2>
+
+<pre class="code-block"><code># Основные команды Git для DS-проектов
+git init                          # инициализация репозитория
+git clone URL                     # клонировать репо
+
+# Базовый workflow
+git status                        # что изменилось?
+git add .                         # добавить все файлы
+git add src/model.py              # добавить конкретный файл
+git commit -m "feat: add CatBoost model with AUC=0.87"
+git push origin main              # загрузить на GitHub
+
+# Ветки (branches)
+git checkout -b feature/new-model  # создать и переключиться
+git merge feature/new-model        # слить в main
+git pull origin main               # получить обновления
+
+# .gitignore для DS-проектов (ВАЖНО!)
+cat .gitignore
+# data/          — данные не хранить в git!
+# models/        — большие модели → Git LFS или S3
+# .env           — секреты и пароли
+# __pycache__/
+# .ipynb_checkpoints/
+# *.pkl          — пикл-файлы моделей</code></pre>
+
+<h2>Структура DS-проекта</h2>
+
+<pre class="code-block"><code">"""
+Хорошая структура DS-проекта (Cookiecutter Data Science):
+
+my-ml-project/
+├── data/
+│   ├── raw/          # исходные данные (не менять!)
+│   ├── processed/    # после preprocessing
+│   └── features/     # готовые признаки
+├── notebooks/
+│   ├── 01_eda.ipynb
+│   ├── 02_features.ipynb
+│   └── 03_modeling.ipynb
+├── src/
+│   ├── __init__.py
+│   ├── data.py       # загрузка данных
+│   ├── features.py   # feature engineering
+│   └── models.py     # обучение и оценка
+├── models/           # сохранённые модели
+├── reports/          # отчёты и графики
+├── requirements.txt  # зависимости
+├── config.yaml       # конфигурация
+├── README.md
+└── Makefile          # команды (make train, make predict)
+"""
+
+# Сохранение и загрузка модели
+import pickle
+import joblib
+
+# Сохранение (joblib лучше для sklearn)
+joblib.dump(model, 'models/catboost_v2.pkl')
+joblib.dump(scaler, 'models/scaler_v2.pkl')
+
+# Загрузка
+model = joblib.load('models/catboost_v2.pkl')
+scaler = joblib.load('models/scaler_v2.pkl')</code></pre>
+
+<h2>FastAPI — REST API для ML-модели</h2>
+
+<pre class="code-block"><code">from fastapi import FastAPI
+from pydantic import BaseModel
+import joblib
+import numpy as np
+
+app = FastAPI(title="Credit Scoring API", version="2.0")
+
+# Загружаем модель при старте
+model = joblib.load('models/credit_model.pkl')
+scaler = joblib.load('models/scaler.pkl')
+
+# Схема входных данных (с валидацией!)
+class ClientFeatures(BaseModel):
+    age: int
+    income: float
+    credit_history_months: int
+    num_products: int
+    avg_balance: float
+    
+class PredictionResponse(BaseModel):
+    client_id: str
+    default_probability: float
+    risk_level: str
+    decision: str
+
+@app.post("/predict", response_model=PredictionResponse)
+def predict_credit_risk(client: ClientFeatures, client_id: str = "unknown"):
+    # Подготовка данных
+    features = np.array([[
+        client.age,
+        client.income, 
+        client.credit_history_months,
+        client.num_products,
+        client.avg_balance
+    ]])
+    
+    features_scaled = scaler.transform(features)
+    prob = model.predict_proba(features_scaled)[0, 1]
+    
+    # Бизнес-правила
+    if prob < 0.2:
+        risk_level, decision = "низкий", "одобрить"
+    elif prob < 0.5:
+        risk_level, decision = "средний", "одобрить с условиями"
+    else:
+        risk_level, decision = "высокий", "отклонить"
+    
+    return PredictionResponse(
+        client_id=client_id,
+        default_probability=round(prob, 4),
+        risk_level=risk_level,
+        decision=decision
+    )
+
+@app.get("/health")
+def health_check():
+    return {"status": "ok", "model_version": "2.0"}
+
+# Запуск: uvicorn main:app --host 0.0.0.0 --port 8080</code></pre>
+
+<h2>Docker — контейнеризация</h2>
+
+<pre class="code-block"><code"># Dockerfile для ML-сервиса
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Сначала зависимости (кеширование)
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Потом код и модели
+COPY src/ ./src/
+COPY models/ ./models/
+COPY main.py .
+
+EXPOSE 8080
+
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8080"]
+
+# Команды:
+# docker build -t credit-scoring:v2 .
+# docker run -p 8080:8080 credit-scoring:v2
+# docker push registry.sber.ru/ml/credit-scoring:v2</code></pre>
+
+<h2>Мониторинг моделей в продакшне</h2>
+
+<pre class="code-block"><code">"""
+Почему модели деградируют?
+
+Data Drift — изменение распределения входных данных:
+  - COVID изменил транзакционное поведение клиентов
+  - Инфляция изменила "нормальный" уровень дохода
+
+Concept Drift — изменение связи X→y:
+  - Антифрод: мошенники адаптируются
+  - Кредитный скоринг: меняются экономические условия
+
+ЧТО МОНИТОРИРОВАТЬ:
+1. Качество модели (AUC-ROC на свежих данных)
+2. Распределение входных признаков (PSI метрика)
+3. Распределение предсказаний
+4. Латентность (время ответа API)
+5. Бизнес-метрики (конверсия, дефолт-рейт)
+"""
+
+# PSI (Population Stability Index) — мониторинг drift
+def calculate_psi(expected, actual, buckets=10):
+    """
+    PSI < 0.1: модель стабильна
+    0.1 < PSI < 0.25: незначительные изменения, следить
+    PSI > 0.25: значительный дрифт, переобучать модель!
+    """
+    def psi_bucket(e, a):
+        if a == 0:
+            a = 0.0001
+        if e == 0:
+            e = 0.0001
+        return (e - a) * np.log(e / a)
+    
+    expected_pct = np.histogram(expected, buckets)[0] / len(expected)
+    actual_pct = np.histogram(actual, buckets)[0] / len(actual)
+    
+    return sum(psi_bucket(e, a) for e, a in zip(expected_pct, actual_pct))</code></pre>
+
+<div class="key-point">
+  <span class="key-icon">💡</span>
+  <p><strong>MLOps в Сбере:</strong> Сбер использует внутреннюю ML-платформу на базе Kubernetes и MLflow для управления моделями. Понимание Docker, REST API и мониторинга моделей — критично для перехода с Junior DS на Middle и Senior уровни.</p>
+</div>
+
+<div class="summary-block">
+  <h3>📌 Итоги урока</h3>
+  <ul>
+    <li>Git — обязателен. Учи ветки, pull requests, .gitignore</li>
+    <li>Хорошая структура проекта = читаемость и воспроизводимость</li>
+    <li>FastAPI + Pydantic — создание ML API за часы</li>
+    <li>Docker — упаковка модели для деплоя на любом сервере</li>
+    <li>Data Drift и Concept Drift — модели деградируют, нужен мониторинг</li>
+    <li>PSI > 0.25 — сигнал к переобучению модели</li>
+  </ul>
+</div>`,
+          quiz: [
+            { q: 'Зачем добавлять data/ в .gitignore DS-проекта?', opts: ['Git не умеет хранить CSV', 'Данные часто конфиденциальны и могут быть очень большими', 'Git работает медленнее с данными', 'Данные всегда есть в pip пакетах'], ans: 1, exp: 'Банковские данные конфиденциальны (GDPR, 152-ФЗ). Кроме того, CSV на миллионы строк — гигабайты, Git не предназначен для этого. Данные хранят в S3/HDFS/базах данных.' },
+            { q: 'Что такое Data Drift в ML?', opts: ['Ошибка в коде модели', 'Изменение распределения входных данных со временем', 'Переобучение модели', 'Утечка данных в тренировочной выборке'], ans: 1, exp: 'Data Drift: распределение реальных данных начинает отличаться от обучающей выборки. Например COVID изменил паттерны трат — скоринговые модели стали хуже.' },
+            { q: 'PSI = 0.31 для признака "доход". Что делать?', opts: ['Всё нормально, PSI < 1', 'Небольшой дрифт, мониторить', 'Значительный дрифт: переобучить модель на свежих данных', 'Удалить признак'], ans: 2, exp: 'PSI > 0.25 — значительное изменение распределения признака. Модель обучена на "старых" данных, её нужно переобучить на актуальных данных.' },
+            { q: 'Зачем в FastAPI используется Pydantic BaseModel?', opts: ['Для ускорения API', 'Для автоматической валидации входных данных и генерации документации', 'Для соединения с базой данных', 'Для асинхронных запросов'], ans: 1, exp: 'Pydantic: описываешь схему данных → FastAPI автоматически валидирует входящие запросы, возвращает ошибку если тип неверный, и генерирует Swagger документацию.' },
+            { q: 'Что такое Concept Drift?', opts: ['Изменение входных данных', 'Изменение самой связи X→y (то что было правдой — перестало работать)', 'Ошибка в feature engineering', 'Переполнение памяти модели'], ans: 1, exp: 'Concept Drift: меняется сама зависимость. Например, признак "задержка платежей" раньше означал риск дефолта. После COVID — это стало нормой для миллионов клиентов.' }
+          ]
+        }
+      ]
+    },
+
+    // ═══════════════════════════════════════════════
+    // MODULE 9 — DS в банкинге. Карьера
+    // ═══════════════════════════════════════════════
+    {
+      id: 'm9',
+      title: 'DS в Сбере: путь к успеху',
+      subtitle: 'Скоринг, антифрод, карьера',
+      icon: '🏦',
+      color: '#22c55e',
+      estimatedDays: 3,
+      lessons: [
+        {
+          id: 'm9l1',
+          title: 'Банковский DS: скоринг, антифрод, рекомендации',
+          subtitle: 'Реальные ML-задачи Сбера и как в них войти',
+          readTime: 14,
+          xp: 85,
+          content: `
+<div class="lesson-intro">
+  <p class="lead">Ты уже работаешь в Сбере. Это огромное преимущество — ты видишь бизнес изнутри. Теперь давай разберём конкретные ML-задачи которые решают DS в Сбере и как позиционировать твой опыт для перехода.</p>
+</div>
+
+<h2>Кредитный скоринг — самая важная задача</h2>
+
+<pre class="code-block"><code">"""
+КРЕДИТНЫЙ СКОРИНГ — предсказание вероятности дефолта (PD)
+
+Задача: P(дефолт в течение 12 мес | признаки клиента)
+
+Метрика: Gini = 2 * AUC - 1
+  Gini < 0.3: плохая модель
+  0.3-0.5: приемлемо
+  0.5-0.7: хорошо (большинство банковских моделей)
+  > 0.7: отлично (топ моделей в Сбере)
+
+ПРИЗНАКИ (features) в скоринге:
+1. Социо-демографические: возраст, образование, семейное положение
+2. Финансовые: доход, долговая нагрузка (DTI), остатки на счетах
+3. Поведенческие: история платежей, просрочки, транзакции
+4. Кредитная история: количество кредитов, КИ в БКИ
+5. Внешние: данные операторов связи, маркетплейсов (с согласия)
+
+АЛГОРИТМЫ:
+- Логистическая регрессия: для регуляторной отчётности (интерпретируемость)
+- Gradient Boosting (CatBoost): для максимальной точности
+- Scorecards: линейные модели с бинингом признаков
+"""
+
+# Типичный pipeline кредитного скоринга
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
+from catboost import CatBoostClassifier
+
+scoring_pipeline = Pipeline([
+    ('preprocess', DataPreprocessor()),
+    ('feature_eng', FeatureEngineer()),
+    ('model', CatBoostClassifier(
+        iterations=500,
+        learning_rate=0.05,
+        depth=6,
+        l2_leaf_reg=5,
+        cat_features=['employment_type', 'education', 'region'],
+        eval_metric='AUC',
+        random_seed=42
+    ))
+])</code></pre>
+
+<h2>Антифрод — защита от мошенничества</h2>
+
+<pre class="code-block"><code">"""
+АНТИФРОД — обнаружение мошеннических транзакций в реальном времени
+
+Особенности:
+- Сильный дисбаланс классов: 0.1% мошенничества, 99.9% честных
+- Требования к задержке: < 200ms для онлайн-транзакций
+- Мошенники постоянно адаптируются (concept drift)
+
+Метрики: Precision@Recall=0.8 или F-beta (beta>1 → больше вес Recall)
+
+ПРИЗНАКИ для антифрода:
+- Скорость транзакции (velocity): количество за час/день
+- Гео: транзакция из нетипичной локации
+- Временные паттерны: 3AM, нерабочие дни
+- Устройство: новое устройство, VPN
+- Сумма: аномально большая для клиента
+- Граф связей: кто ещё использовал эту карту
+
+МЕТОДЫ:
+- Gradient Boosting: основной алгоритм
+- Autoencoders: аномалия = большая ошибка восстановления
+- Graph Neural Networks: для анализа связей между объектами
+- Isolation Forest: unsupervised anomaly detection
+"""
+
+from sklearn.ensemble import IsolationForest
+import numpy as np
+
+# Unsupervised детекция аномалий
+iso_forest = IsolationForest(
+    n_estimators=100,
+    contamination=0.001,  # ожидаем 0.1% аномалий
+    random_state=42
+)
+iso_forest.fit(X_train)
+
+# -1 = аномалия, 1 = норма
+anomaly_scores = iso_forest.decision_function(X_test)
+# Чем ниже score, тем более аномальна транзакция</code></pre>
+
+<h2>Рекомендательные системы</h2>
+
+<pre class="code-block"><code">"""
+РЕКОМЕНДАТЕЛЬНЫЕ СИСТЕМЫ в Сбере:
+- СберМаркет: рекомендации товаров
+- СберБанк: подбор продуктов (кредит, вклад, страховка)
+- СберЗвук: музыка
+- Afisha: фильмы и события
+
+ПОДХОДЫ:
+1. Collaborative Filtering — "клиенты похожие на тебя выбирали..."
+2. Content-Based — "тебе понравится, потому что похоже на то что ты уже купил"
+3. Matrix Factorization — SVD, ALS
+4. Deep Learning — Two-Tower модели, BERT4Rec
+
+МЕТРИКИ:
+- MAP@K, NDCG@K — качество ранжирования
+- Hit Rate@K — попал ли правильный продукт в топ-K
+- Coverage — разнообразие рекомендаций
+"""
+
+from sklearn.metrics.pairwise import cosine_similarity
+import pandas as pd
+
+# Коллаборативная фильтрация — базовый пример
+user_item_matrix = pd.DataFrame({
+    'кредит':     [5, 3, 0, 1],
+    'вклад':      [4, 0, 4, 1], 
+    'ипотека':    [1, 5, 2, 0],
+    'страховка':  [0, 4, 3, 5]
+}, index=['Иван', 'Мария', 'Алексей', 'Ольга'])
+
+# Сходство пользователей
+user_similarity = cosine_similarity(user_item_matrix)
+sim_df = pd.DataFrame(user_similarity, 
+                       index=user_item_matrix.index,
+                       columns=user_item_matrix.index)
+print("Матрица сходства пользователей:")
+print(sim_df.round(2))</code></pre>
+
+<h2>Твой план перехода в DS в Сбере</h2>
+
+<div class="career-plan">
+  <div class="plan-step">
+    <h3>🎯 Шаг 1: Прямо сейчас (1-2 месяца)</h3>
+    <ul>
+      <li>Прочти весь этот курс и выполни все упражнения</li>
+      <li>Создай GitHub профиль с 2-3 DS проектами</li>
+      <li>Пройди Kaggle Titanic, House Prices — базовые соревнования</li>
+      <li>Поговори с DS коллегами в Сбере — спроси как они начинали</li>
+    </ul>
+  </div>
+
+  <div class="plan-step">
+    <h3>🚀 Шаг 2: Строим портфолио (3-6 месяцев)</h3>
+    <ul>
+      <li>Kaggle: получи рейтинг Contributor или Novice</li>
+      <li>Проект 1: кредитный скоринг на открытых данных + API</li>
+      <li>Проект 2: NLP анализ отзывов банков на HeadHunter</li>
+      <li>Выучи SQL оконные функции (приоритет!)</li>
+      <li>Пройди курс "ML в банковских данных" на Stepik</li>
+    </ul>
+  </div>
+
+  <div class="plan-step">
+    <h3>💼 Шаг 3: Внутренний переход (6-12 месяцев)</h3>
+    <ul>
+      <li>Поговори с HR и своим руководителем о карьерном интересе</li>
+      <li>Найди внутренние DS-задачи или проекты (хакатоны)</li>
+      <li>Попроси стать сначала аналитиком данных (промежуточная роль)</li>
+      <li>LinkedIn: опиши навыки как "Data Annotation Specialist → DS путь"</li>
+    </ul>
+  </div>
+</div>
+
+<div class="key-point">
+  <span class="key-icon">💎</span>
+  <p><strong>Твоё конкурентное преимущество:</strong> Ты понимаешь данные изнутри — знаешь как делается разметка, какие ошибки бывают, как устроены инструменты. Большинство DS никогда не работали с сырыми данными на этом уровне. Это уникальный опыт — позиционируй его правильно!</p>
+</div>
+
+<div class="summary-block">
+  <h3>📌 Итоги урока</h3>
+  <ul>
+    <li>Скоринг: предсказание PD, метрика Gini, CatBoost + LR</li>
+    <li>Антифрод: дисбаланс классов, онлайн, Recall важнее Precision</li>
+    <li>Рекомендательные системы: Collaborative Filtering, Matrix Factorization</li>
+    <li>Твой план: GitHub → Kaggle → внутренний переход</li>
+    <li>Уникальное преимущество: знание данных изнутри</li>
+  </ul>
+</div>`,
+          quiz: [
+            { q: 'Что такое Gini коэффициент в кредитном скоринге?', opts: ['Мера неравенства доходов', 'Метрика качества скоринговой модели: Gini = 2*AUC - 1', 'Метод обработки категориальных признаков', 'Тип регуляризации'], ans: 1, exp: 'Gini = 2*AUC - 1. Если AUC = 0.75, то Gini = 0.5. Банки используют Gini как стандартную метрику скоринговых моделей.' },
+            { q: 'Почему в антифроде Recall важнее Precision?', opts: ['Recall всегда важнее в ML', 'Пропустить мошенника (FN) дороже для банка чем ложная тревога (FP)', 'Precision невозможно измерить в реальном времени', 'Recall легче оптимизировать'], ans: 1, exp: 'FN (пропущенный мошенник) = потери денег клиентов и банка + репутационный ущерб. FP (ложная тревога) = неудобство клиента. FN дороже → максимизируем Recall.' },
+            { q: 'Что такое velocity в контексте антифрода?', opts: ['Скорость работы модели', 'Количество транзакций за определённый период как признак', 'Размер транзакции', 'Метод обучения модели'], ans: 1, exp: 'Velocity = количество транзакций за период (например, 5 транзакций за час). Высокая velocity в нетипичном месте = сильный сигнал мошенничества.' },
+            { q: 'Какой тип коллаборативной фильтрации использует сходство между пользователями?', opts: ['Content-Based', 'User-Based Collaborative Filtering', 'Matrix Factorization', 'Deep Learning'], ans: 1, exp: 'User-Based CF: "Пользователи похожие на тебя покупали X → рекомендуем X тебе". Item-Based CF: "Тебе понравился продукт A, похожий на него B → рекомендуем B".' },
+            { q: 'Какой первый практический шаг для перехода в DS?', opts: ['Сразу подать резюме на DS позицию', 'Создать GitHub профиль с DS проектами и пройти Kaggle соревнования', 'Получить PhD по математике', 'Освоить Tensorflow и PyTorch'], ans: 1, exp: 'Портфолио на GitHub + Kaggle рейтинг = практическое доказательство навыков. Это важнее диплома для перехода из смежной роли в DS.' }
+          ]
+        }
+      ]
+    }
+
+  ]
+};
+
+// Вычисляем общее количество XP
+DS_CONTENT.totalXP = DS_CONTENT.modules.reduce((total, mod) => {
+  return total + mod.lessons.reduce((sum, lesson) => sum + lesson.xp + 30, 0);
+}, 0);
+
+// Уровни прогресса
+const LEVELS = [
+  { level: 1, title: 'Стажёр', minXP: 0,    icon: '🌱' },
+  { level: 2, title: 'Аналитик данных', minXP: 200,  icon: '📊' },
+  { level: 3, title: 'Junior DS', minXP: 500,  icon: '🔬' },
+  { level: 4, title: 'Middle DS', minXP: 1000, icon: '⚡' },
+  { level: 5, title: 'Senior DS', minXP: 1800, icon: '🏆' },
+  { level: 6, title: 'Lead DS', minXP: 2800, icon: '🌟' },
+];
+
+function getLevelInfo(xp) {
+  let currentLevel = LEVELS[0];
+  let nextLevel = LEVELS[1];
+  
+  for (let i = LEVELS.length - 1; i >= 0; i--) {
+    if (xp >= LEVELS[i].minXP) {
+      currentLevel = LEVELS[i];
+      nextLevel = LEVELS[i + 1] || null;
+      break;
+    }
+  }
+  
+  const progressToNext = nextLevel 
+    ? ((xp - currentLevel.minXP) / (nextLevel.minXP - currentLevel.minXP)) * 100
+    : 100;
+    
+  return { currentLevel, nextLevel, progressToNext };
+}
+
+// Достижения
+const ACHIEVEMENTS = [
+  { id: 'first_lesson', title: 'Первый шаг', desc: 'Прочитать первый урок', icon: '👣', condition: (stats) => stats.completedLessons >= 1 },
+  { id: 'first_quiz', title: 'Квизмастер-1', desc: 'Пройти первый тест', icon: '🎯', condition: (stats) => stats.quizzesPassed >= 1 },
+  { id: 'five_lessons', title: 'Набираю обороты', desc: 'Пройти 5 уроков', icon: '🔥', condition: (stats) => stats.completedLessons >= 5 },
+  { id: 'perfect_quiz', title: 'Идеальный результат', desc: 'Набрать 100% в тесте', icon: '💎', condition: (stats) => stats.perfectQuizzes >= 1 },
+  { id: 'streak_3', title: 'Три дня подряд', desc: 'Учиться 3 дня подряд', icon: '📅', condition: (stats) => stats.maxStreak >= 3 },
+  { id: 'streak_7', title: 'Неделя без пропусков', desc: 'Учиться 7 дней подряд', icon: '🗓️', condition: (stats) => stats.maxStreak >= 7 },
+  { id: 'ten_lessons', title: 'Серьёзный подход', desc: 'Пройти 10 уроков', icon: '🎓', condition: (stats) => stats.completedLessons >= 10 },
+  { id: 'all_python', title: 'Python-разработчик', desc: 'Завершить модуль Python', icon: '🐍', condition: (stats) => stats.completedModules.includes('m1') },
+  { id: 'all_pandas', title: 'Pandas-гуру', desc: 'Завершить модуль Pandas', icon: '🐼', condition: (stats) => stats.completedModules.includes('m2') },
+  { id: 'all_ml', title: 'Машинист ML', desc: 'Завершить модуль ML', icon: '🤖', condition: (stats) => stats.completedModules.includes('m4') },
+  { id: 'xp_500', title: 'Полпути пройдено', desc: 'Набрать 500 XP', icon: '⚡', condition: (stats) => stats.totalXP >= 500 },
+  { id: 'xp_1000', title: 'Junior DS!', desc: 'Набрать 1000 XP', icon: '🏅', condition: (stats) => stats.totalXP >= 1000 },
+  { id: 'all_modules', title: 'Путь пройден!', desc: 'Завершить все модули', icon: '🌟', condition: (stats) => stats.completedLessons >= 20 },
+];
